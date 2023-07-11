@@ -1,3 +1,3 @@
-<app-header></app-header>
-<app-nav></app-nav>
+<app-header (toggleNav)="toggleNav($event)"></app-header>
+<app-nav [isNavOpen]="isNavOpen"></app-nav>
 <app-footer></app-footer>
