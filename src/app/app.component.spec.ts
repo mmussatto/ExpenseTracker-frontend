@@ -1,29 +1,37 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import { TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { AppComponent } from "./app.component";
+import { Component, Input } from "@angular/core";
 
-describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+//Stubs
+@Component({ selector: "app-header", template: "" })
+class AppHeaderStubComponent {}
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+@Component({ selector: "app-footer", template: "" })
+class AppFooterStubComponent {}
 
-  it(`should have as title 'ExpenseTracker-frontend'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('ExpenseTracker-frontend');
-  });
+@Component({ selector: "app-nav", template: "" })
+class AppNavStubComponent {
+    @Input() isNavOpen: any;
+}
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ExpenseTracker-frontend app is running!');
-  });
+//Describe
+describe("AppComponent", () => {
+    beforeEach(() =>
+        TestBed.configureTestingModule({
+            imports: [RouterTestingModule],
+            declarations: [
+                AppComponent,
+                AppHeaderStubComponent,
+                AppFooterStubComponent,
+                AppNavStubComponent,
+            ],
+        })
+    );
+
+    it("should create the app", () => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.componentInstance;
+        expect(app).toBeTruthy();
+    });
 });

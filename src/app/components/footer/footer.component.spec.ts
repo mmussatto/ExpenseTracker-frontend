@@ -1,21 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { FooterComponent } from './footer.component';
+import { FooterComponent } from "./footer.component";
+import { Component } from "@angular/core";
 
-describe('FooterComponent', () => {
-  let component: FooterComponent;
-  let fixture: ComponentFixture<FooterComponent>;
+@Component({ selector: "mat-toolbar", template: "" })
+class MatToolbarStubComponent {}
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [FooterComponent]
+describe("FooterComponent", () => {
+    let component: FooterComponent;
+    let fixture: ComponentFixture<FooterComponent>;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [FooterComponent, MatToolbarStubComponent],
+        });
+        fixture = TestBed.createComponent(FooterComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(FooterComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });
