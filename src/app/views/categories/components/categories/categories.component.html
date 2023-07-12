@@ -4,6 +4,20 @@
     <h1>Categories</h1>
   </div>
 
+  <!---------- Add new button  ---------->
+  <div class="add-button-container">
+    <button
+      mat-mini-fab
+      color="basic"
+      aria-label="Icon button with a plus one icon"
+    >
+      <a routerLink="/new">
+        <mat-icon>plus_one</mat-icon>
+      </a>
+    </button>
+  </div>
+
+  <!---------- Loading  ---------->
   <mat-spinner *ngIf="!categories.length" class="spinner"></mat-spinner>
 
   <!---------- Table  ---------->
@@ -58,6 +72,7 @@
     </table>
 
     <mat-paginator
+      class="paginator"
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
       aria-label="Select page of categories"
