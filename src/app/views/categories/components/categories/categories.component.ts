@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -10,7 +10,7 @@ import { CategoriesService, Category } from "../../services/categories.service";
     templateUrl: "./categories.component.html",
     styleUrls: ["./categories.component.css"],
 })
-export class CategoriesComponent implements OnInit, AfterViewInit {
+export class CategoriesComponent implements OnInit {
     displayedColumns: string[] = ["id", "name", "color"];
 
     categories: Category[] = [];
@@ -26,19 +26,15 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
             this.categories = response;
             console.log(response);
             this.dataSource = new MatTableDataSource(this.categories);
+
+            this.dataSource.paginator = this.paginator ?? null;
+            this.dataSource.sort = this.sort ?? null;
         });
     }
 
     @ViewChild(MatSort) sort?: MatSort | null;
 
     @ViewChild(MatPaginator) paginator?: MatPaginator;
-
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator ?? null;
-        this.dataSource.sort = this.sort ?? null;
-        console.log(this.sort);
-        console.log(this.dataSource.sort);
-    }
 
     /** Announce the change in sort state for assistive technology. */
     announceSortChange(sortState: Sort) {
