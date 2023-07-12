@@ -14,7 +14,7 @@ export class NavComponent implements OnChanges {
     isNavOpen?: boolean;
 
     ngOnChanges(): void {
-        console.log("ngOnChanges", this.isNavOpen);
+        // console.log("ngOnChanges", this.isNavOpen);
         if (this.isNavOpen) {
             this.sidenav?.open();
         } else {

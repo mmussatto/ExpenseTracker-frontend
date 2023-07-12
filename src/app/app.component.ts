@@ -10,6 +10,6 @@ export class AppComponent {
 
     toggleNav(event: boolean) {
         this.isNavOpen = !this.isNavOpen;
-        console.log("toggleNav", event);
+        // console.log("toggleNav", event);
     }
 }
