@@ -4,6 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 //Components
 import { CategoriesComponent } from "./components/categories/categories.component";
+import { NewCategoryComponent } from "./components/new-category/new-category.component";
 
 //Services
 import { CategoriesService } from "./services/categories.service";
@@ -15,7 +16,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
-    declarations: [CategoriesComponent],
+    declarations: [CategoriesComponent, NewCategoryComponent],
     imports: [
         CommonModule,
         HttpClientModule,
