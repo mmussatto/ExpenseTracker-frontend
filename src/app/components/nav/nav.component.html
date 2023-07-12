@@ -1,9 +1,26 @@
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side">
-    <p>Transactions</p>
-    <p>Categories</p>
-    <p>Payment Methods</p>
-    <p>Vendors</p>
-    <p>Tags</p>
+    <mat-nav-list>
+      <a mat-list-item routerLink="transactions">
+        <i class="material-icons">local_atm</i>
+        Transactions
+      </a>
+      <a mat-list-item routerLink="categories">
+        <i class="material-icons">category</i>
+        Categories
+      </a>
+      <a mat-list-item routerLink="payment-methods">
+        <i class="material-icons">payment</i>
+        Payment Methods
+      </a>
+      <a mat-list-item routerLink="vendors">
+        <i class="material-icons">store</i>
+        Vendors
+      </a>
+      <a mat-list-item routerLink="tags">
+        <i class="material-icons">flag</i>
+        Tags
+      </a>
+    </mat-nav-list>
   </mat-drawer>
 </mat-drawer-container>
