@@ -13,10 +13,8 @@
     margin: 1.4rem auto auto auto;
 }
 
-.add-button-container {
+.add-category-container {
     display: flex;
-    justify-content: center;
-    width: 10%;
 }
 
 table {
