@@ -1,1 +1,32 @@
-<p>new-category works!</p>
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="newCategoryForm" (submit)="submit()">
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error
+          *ngIf="
+            newCategoryForm.controls.name.touched &&
+            newCategoryForm.controls.name.invalid
+          "
+        >
+          <span *ngIf="newCategoryForm.controls.name.errors?.['required']"
+            >This field is mandatory.</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Color</mat-label>
+        <mat-select formControlName="color">
+          <mat-option *ngFor="let color of colors" value="color">{{
+            color
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        Create new category
+      </button>
+    </form>
+  </div>
+</div>
