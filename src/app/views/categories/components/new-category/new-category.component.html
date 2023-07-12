@@ -22,6 +22,16 @@
             color
           }}</mat-option>
         </mat-select>
+        <mat-error
+          *ngIf="
+            newCategoryForm.controls.color.touched &&
+            newCategoryForm.controls.color.invalid
+          "
+        >
+          <span *ngIf="newCategoryForm.controls.color.errors?.['required']"
+            >This field is mandatory.</span
+          >
+        </mat-error>
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit">
