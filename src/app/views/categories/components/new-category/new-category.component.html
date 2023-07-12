@@ -18,7 +18,7 @@
       <mat-form-field class="form-field">
         <mat-label>Color</mat-label>
         <mat-select formControlName="color">
-          <mat-option *ngFor="let color of colors" value="color">{{
+          <mat-option *ngFor="let color of colors" [value]="color">{{
             color
           }}</mat-option>
         </mat-select>
