@@ -12,10 +12,18 @@ import { CategoriesService } from "./services/categories.service";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
     declarations: [CategoriesComponent],
-    imports: [CommonModule, HttpClientModule, MatTableModule, MatPaginatorModule, MatSortModule],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+    ],
     providers: [CategoriesService],
 })
 export class CategoriesModule {}

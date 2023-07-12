@@ -8,6 +8,11 @@
     margin-bottom: 3rem;
 }
 
+.spinner {
+    text-align: center;
+    margin: 1.4rem auto auto auto;
+}
+
 table {
     width: 100%;
 }

@@ -4,8 +4,10 @@
     <h1>Categories</h1>
   </div>
 
+  <mat-spinner *ngIf="!categories.length" class="spinner"></mat-spinner>
+
   <!---------- Table  ---------->
-  <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8" *ngIf="categories.length">
     <table
       mat-table
       [dataSource]="dataSource"
