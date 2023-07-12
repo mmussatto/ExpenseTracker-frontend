@@ -13,12 +13,12 @@ export interface Category {
     providedIn: "root",
 })
 export class CategoriesService {
-    baseUrl: string = environment.baseUrl;
+    baseUrl: string = `${environment.baseUrl}/categories`;
 
     constructor(private http: HttpClient) {}
 
     findAllCategories(): Observable<Category[]> {
-        const url = `${this.baseUrl}/categories`;
-        return this.http.get<Category[]>(url);
+        return this.http.get<Category[]>(this.baseUrl);
+    }
     }
 }
