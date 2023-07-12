@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 
 export interface Category {
-    id: number;
+    id?: number;
     name: string;
     color: string;
 }
@@ -20,5 +20,10 @@ export class CategoriesService {
     findAllCategories(): Observable<Category[]> {
         return this.http.get<Category[]>(this.baseUrl);
     }
+
+    createNewCategory(category: Category): Observable<Category> {
+        console.log(category);
+
+        return this.http.post<Category>(this.baseUrl, category);
     }
 }
