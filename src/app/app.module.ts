@@ -22,6 +22,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatDialogModule } from "@angular/material/dialog";
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
     declarations: [
@@ -42,6 +44,8 @@ import { MatDialogModule } from "@angular/material/dialog";
         MatSidenavModule,
         MatListModule,
         MatDialogModule,
+        StoreModule.forRoot({}, {}),
+        EffectsModule.forRoot([]),
     ],
     providers: [],
     bootstrap: [AppComponent],
