@@ -22,6 +22,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatDialogModule } from "@angular/material/dialog";
 
 const ROUTES: Routes = [{ path: "new", component: NewCategoryComponent }];
 
@@ -42,6 +43,7 @@ const ROUTES: Routes = [{ path: "new", component: NewCategoryComponent }];
         MatSelectModule,
         MatButtonModule,
         MatSnackBarModule,
+        MatDialogModule,
     ],
     providers: [CategoriesService],
     exports: [RouterModule],

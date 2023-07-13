@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CategoriesService, Category } from "../../services/categories.service";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "src/app/templates/dialogs/confirm-dialog/confirm-dialog.component";
 
 @Component({
     selector: "app-new-category",
@@ -21,7 +23,8 @@ export class NewCategoryComponent implements OnInit {
         private fb: FormBuilder,
         private categoryService: CategoriesService,
         private router: Router,
-        private _snackBar: MatSnackBar
+        private _snackBar: MatSnackBar,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {}
@@ -61,5 +64,18 @@ export class NewCategoryComponent implements OnInit {
         snackbarConfig = { ...snackbarConfig, duration: 5000 };
 
         return this._snackBar.open(message, "X", snackbarConfig);
+    }
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            data: { info: "Crate new category?" },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+            if (result === true) {
+                this.submit();
+            }
+        });
     }
 }
