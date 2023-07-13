@@ -15,6 +15,7 @@
 
 .add-category-container {
     display: flex;
+    padding-bottom: 1rem;
 }
 
 table {
