@@ -3,6 +3,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
+//Templates
+import { ConfirmDialogComponent } from "./templates/dialogs/confirm-dialog/confirm-dialog.component";
+
 //App components
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./components/header/header.component";
@@ -18,9 +21,16 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent, FooterComponent, NavComponent],
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        NavComponent,
+        ConfirmDialogComponent,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -31,6 +41,7 @@ import { MatListModule } from "@angular/material/list";
         MatToolbarModule,
         MatSidenavModule,
         MatListModule,
+        MatDialogModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
