@@ -11,9 +11,10 @@ import { CategoriesService, Category } from "../../services/categories.service";
     styleUrls: ["./categories.component.css"],
 })
 export class CategoriesComponent implements OnInit {
-    displayedColumns: string[] = ["id", "name", "color"];
+    displayedColumns: string[] = ["id", "name", "color", "actions"];
 
     categories: Category[] = [];
+
     dataSource = new MatTableDataSource(this.categories);
 
     constructor(
@@ -48,4 +49,12 @@ export class CategoriesComponent implements OnInit {
             this._liveAnnouncer.announce("Sorting cleared");
         }
     }
+
+    deleteCategory(id: number) {
+        this.categoriesService.deleteCategory(id).subscribe(() => {
+            this.categories = this.categories.filter((c) => c.id !== id);
+            this.refreshDataSource();
+        });
+    }
+
 }

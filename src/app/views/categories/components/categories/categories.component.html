@@ -61,10 +61,39 @@
         <td mat-cell *matCellDef="let category">{{ category.color }}</td>
       </ng-container>
 
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by symbol"
+          mat-sort-disabled
+        >
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let category">
+          <button
+            mat-icon-button
+            [routerLink]="category.id + '/update'"
+            aria-label="Icon button with a pencil"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            aria-label="Icon button with a trash can"
+            (click)="deleteCategory(category.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-
     <mat-paginator
       class="paginator"
       [pageSizeOptions]="[5, 10, 20]"
