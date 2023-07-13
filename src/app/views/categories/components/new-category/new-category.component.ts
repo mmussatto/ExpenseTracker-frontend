@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CategoriesService, Category } from "../../services/categories.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-new-category",
@@ -15,7 +16,11 @@ export class NewCategoryComponent implements OnInit {
         color: ["", Validators.required],
     });
 
-    constructor(private fb: FormBuilder, private categoryService: CategoriesService) {}
+    constructor(
+        private fb: FormBuilder,
+        private categoryService: CategoriesService,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {}
 
@@ -28,6 +33,7 @@ export class NewCategoryComponent implements OnInit {
 
         this.categoryService.createNewCategory(category as Category).subscribe((newCategory) => {
             console.log(newCategory);
+            this.router.navigate(["categories"]);
         });
     }
 }
