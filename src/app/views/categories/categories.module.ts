@@ -7,6 +7,7 @@ import { RouterModule, Routes } from "@angular/router";
 //Components
 import { CategoriesComponent } from "./components/categories/categories.component";
 import { NewCategoryComponent } from "./components/new-category/new-category.component";
+import { UpdateCategoryComponent } from "./components/update-category/update-category.component";
 
 //Services
 import { CategoriesService } from "./services/categories.service";
@@ -27,7 +28,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 const ROUTES: Routes = [{ path: "new", component: NewCategoryComponent }];
 
 @NgModule({
-    declarations: [CategoriesComponent, NewCategoryComponent],
+    declarations: [CategoriesComponent, NewCategoryComponent, UpdateCategoryComponent],
     imports: [
         CommonModule,
         HttpClientModule,
