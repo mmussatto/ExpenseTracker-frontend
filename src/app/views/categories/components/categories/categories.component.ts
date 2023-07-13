@@ -17,6 +17,10 @@ export class CategoriesComponent implements OnInit {
 
     dataSource = new MatTableDataSource(this.categories);
 
+    @ViewChild(MatSort) sort?: MatSort | null;
+
+    @ViewChild(MatPaginator) paginator?: MatPaginator;
+
     constructor(
         private categoriesService: CategoriesService,
         private _liveAnnouncer: LiveAnnouncer
@@ -26,16 +30,9 @@ export class CategoriesComponent implements OnInit {
         this.categoriesService.findAllCategories().subscribe((response) => {
             this.categories = response;
             console.log(response);
-            this.dataSource = new MatTableDataSource(this.categories);
-
-            this.dataSource.paginator = this.paginator ?? null;
-            this.dataSource.sort = this.sort ?? null;
+            this.refreshDataSource();
         });
     }
-
-    @ViewChild(MatSort) sort?: MatSort | null;
-
-    @ViewChild(MatPaginator) paginator?: MatPaginator;
 
     /** Announce the change in sort state for assistive technology. */
     announceSortChange(sortState: Sort) {
@@ -57,4 +54,11 @@ export class CategoriesComponent implements OnInit {
         });
     }
 
+    /** Refresh the dataSource and update the paginator and sort  */
+    private refreshDataSource() {
+        this.dataSource = new MatTableDataSource(this.categories);
+
+        this.dataSource.paginator = this.paginator ?? null;
+        this.dataSource.sort = this.sort ?? null;
+    }
 }
