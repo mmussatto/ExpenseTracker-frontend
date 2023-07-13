@@ -6,7 +6,7 @@
 
   <!---------- Add new category button  ---------->
   <div class="add-category-container">
-    <a routerLink="/new" mat-raised-button color="accent">
+    <a routerLink="new" mat-raised-button color="accent">
       Create new category
     </a>
   </div>
@@ -78,7 +78,7 @@
         <td mat-cell *matCellDef="let category">
           <button
             mat-icon-button
-            [routerLink]="category.id + '/update'"
+            routerLink="{{ category.id }}/update"
             aria-label="Icon button with a pencil"
           >
             <mat-icon>edit</mat-icon>

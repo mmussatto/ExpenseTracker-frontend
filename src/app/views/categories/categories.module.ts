@@ -25,7 +25,15 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatDialogModule } from "@angular/material/dialog";
 
-const ROUTES: Routes = [{ path: "new", component: NewCategoryComponent }];
+const ROUTES: Routes = [
+    {
+        path: "categories",
+        children: [
+            { path: ":id/update", component: UpdateCategoryComponent },
+            { path: "new", component: NewCategoryComponent },
+        ],
+    },
+];
 
 @NgModule({
     declarations: [CategoriesComponent, NewCategoryComponent, UpdateCategoryComponent],
