@@ -1,11 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Category } from "src/app/models/category.model";
 
-export const addCategory = createAction(
-    "[New Category Component] Add category",
-    props<{ name: string; color: string }>()
-);
-
 /* -------- Loading ---------- */
 export const loadCategories = createAction("[Categories Component] Load categories");
 
@@ -16,6 +11,22 @@ export const loadCategoriesSuccess = createAction(
 
 export const loadCategoriesFail = createAction(
     "[Categories API] Categories load failure",
+    props<{ error: string }>()
+);
+
+/* -------- Creating ---------- */
+export const createCategory = createAction(
+    "[New Category Component] Create new category",
+    props<{ category: Category }>()
+);
+
+export const createCategorySuccess = createAction(
+    "[Categories API] Category create success",
+    props<{ category: Category }>()
+);
+
+export const createCategoryFail = createAction(
+    "[Categories API] Category create success",
     props<{ error: string }>()
 );
 
