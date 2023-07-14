@@ -51,7 +51,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     deleteCategory(id: number) {
-        this.store.dispatch(deleteCategory({ id: 26 }));
+        this.store.dispatch(deleteCategory({ id: id }));
     }
 
     /** Refresh the dataSource and update the paginator and sort  */
