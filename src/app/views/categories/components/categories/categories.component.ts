@@ -3,7 +3,11 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { CategoriesService, Category } from "../../services/categories.service";
+import { Store } from "@ngrx/store";
+import { deleteCategory, loadCategories } from "src/app/state/categories/categories.actions";
+import { selectAllCategories } from "src/app/state/categories/categories.selectors";
+import { AppState } from "src/app/state/app.state";
+import { Category } from "src/app/models/category.model";
 
 @Component({
     selector: "app-categories",
@@ -11,26 +15,25 @@ import { CategoriesService, Category } from "../../services/categories.service";
     styleUrls: ["./categories.component.css"],
 })
 export class CategoriesComponent implements OnInit {
+    //Table columns
     displayedColumns: string[] = ["id", "name", "color", "actions"];
+    dataSource = new MatTableDataSource<Category>([]);
 
-    categories: Category[] = [];
+    //Categories from the store
+    categories$ = this.store.select(selectAllCategories);
 
-    dataSource = new MatTableDataSource(this.categories);
-
+    //Sort and paginator
     @ViewChild(MatSort) sort?: MatSort | null;
-
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-    constructor(
-        private categoriesService: CategoriesService,
-        private _liveAnnouncer: LiveAnnouncer
-    ) {}
+    constructor(private store: Store<AppState>, private _liveAnnouncer: LiveAnnouncer) {}
 
     ngOnInit(): void {
-        this.categoriesService.findAllCategories().subscribe((response) => {
-            this.categories = response;
-            console.log(response);
-            this.refreshDataSource();
+        this.store.dispatch(loadCategories());
+
+        this.categories$.subscribe((x) => {
+            console.log("Subscribe on init", x);
+            this.refreshDataSource(x);
         });
     }
 
@@ -48,15 +51,12 @@ export class CategoriesComponent implements OnInit {
     }
 
     deleteCategory(id: number) {
-        this.categoriesService.deleteCategory(id).subscribe(() => {
-            this.categories = this.categories.filter((c) => c.id !== id);
-            this.refreshDataSource();
-        });
+        this.store.dispatch(deleteCategory({ id: 26 }));
     }
 
     /** Refresh the dataSource and update the paginator and sort  */
-    private refreshDataSource() {
-        this.dataSource = new MatTableDataSource(this.categories);
+    private refreshDataSource(categories: Category[]) {
+        this.dataSource = new MatTableDataSource(categories);
 
         this.dataSource.paginator = this.paginator ?? null;
         this.dataSource.sort = this.sort ?? null;
