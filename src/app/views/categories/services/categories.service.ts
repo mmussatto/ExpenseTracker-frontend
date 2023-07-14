@@ -1,13 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Category } from "src/app/models/category.model";
 import { environment } from "src/environments/environment";
-
-export interface Category {
-    id?: number;
-    name: string;
-    color: string;
-}
 
 @Injectable({
     providedIn: "root",
