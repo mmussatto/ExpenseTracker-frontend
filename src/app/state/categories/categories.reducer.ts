@@ -1,12 +1,14 @@
 import { createReducer, on } from "@ngrx/store";
 import {
-    addCategory,
     loadCategories,
     loadCategoriesSuccess,
     loadCategoriesFail,
     deleteCategory,
     deleteCategorySuccess,
     deleteCategoryFail,
+    createCategory,
+    createCategorySuccess,
+    createCategoryFail,
 } from "./categories.actions";
 import { Category } from "src/app/models/category.model";
 
@@ -26,11 +28,6 @@ export const initialState: CategoriesState = {
 export const categoriesReducer = createReducer(
     initialState,
 
-    on(addCategory, (state, { name, color }) => ({
-        ...state,
-        categories: [...state.categories, { name: name, color: color }],
-    })),
-
     /* -------- Loading ---------- */
     on(loadCategories, (state) => ({ ...state, status: "loading" as const })),
 
@@ -42,6 +39,22 @@ export const categoriesReducer = createReducer(
     })),
 
     on(loadCategoriesFail, (state, { error }) => ({
+        ...state,
+        error: error,
+        status: "error" as const,
+    })),
+
+    /* -------- Creating ---------- */
+    on(createCategory, (state) => ({ ...state, status: "pending" as const })),
+
+    on(createCategorySuccess, (state, { category }) => ({
+        ...state,
+        categories: [...state.categories, { ...category }],
+        error: null,
+        status: "success" as const,
+    })),
+
+    on(createCategoryFail, (state, { error }) => ({
         ...state,
         error: error,
         status: "error" as const,
