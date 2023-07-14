@@ -14,14 +14,18 @@ import {
     loadCategoriesFail,
     loadCategoriesSuccess,
 } from "./categories.actions";
-import { catchError, from, map, of, switchMap } from "rxjs";
+import { catchError, from, map, of, switchMap, tap } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class CategoriesEffects {
     constructor(
         private actions$: Actions,
         private store: Store<AppState>,
-        private categoriesService: CategoriesService
+        private categoriesService: CategoriesService,
+        private _snackBar: MatSnackBar,
+        private router: Router
     ) {}
 
     /* -------- Loading ---------- */
@@ -48,11 +52,27 @@ export class CategoriesEffects {
                 // Call the createNewCategory method, convert it to an observable
                 from(this.categoriesService.createNewCategory(category)).pipe(
                     //If success, show snackbar and redirect to categories list page
+                    tap(() => {
+                        this._snackBar
+                            .open("Category created successfully", "X", {
+                                panelClass: ["app-notification-success"],
+                                duration: 5000,
+                            })
+                            .afterDismissed()
+                            .subscribe(() => {
+                                //Navigate back to categories list after snackbar is dismissed
+                                this.router.navigate(["categories"]);
+                            });
+                    }),
                     // Take the returned value and return a new success action containing the new Category
                     map((category) => createCategorySuccess({ category: category })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
                         const errorMessage = error.error.message ?? error.error.messages;
+                        this._snackBar.open(errorMessage, "X", {
+                            panelClass: ["app-notification-error"],
+                            duration: 5000,
+                        });
                         return of(
                             createCategoryFail({
                                 error: errorMessage, //todo, remove after standardization of backend

@@ -26,6 +26,7 @@ import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { categoriesReducer } from "./state/categories/categories.reducer";
 import { CategoriesEffects } from "./state/categories/categories.effects";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { CategoriesEffects } from "./state/categories/categories.effects";
         MatSidenavModule,
         MatListModule,
         MatDialogModule,
+        MatSnackBarModule,
         StoreModule.forRoot({ categories: categoriesReducer }),
         EffectsModule.forRoot([CategoriesEffects]),
     ],
