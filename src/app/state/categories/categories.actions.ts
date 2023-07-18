@@ -26,7 +26,7 @@ export const createCategorySuccess = createAction(
 );
 
 export const createCategoryFail = createAction(
-    "[Categories API] Category create success",
+    "[Categories API] Category create failure",
     props<{ error: string }>()
 );
 

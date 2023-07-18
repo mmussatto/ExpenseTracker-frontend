@@ -68,14 +68,14 @@ export class CategoriesEffects {
                     map((category) => createCategorySuccess({ category: category })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
-                        const errorMessage = error.error.message ?? error.error.messages;
+                        const errorMessage = error.error.message ?? error.error.messages; //todo, remove after standardization of backend
                         this._snackBar.open(errorMessage, "X", {
                             panelClass: ["app-notification-error"],
                             duration: 5000,
                         });
                         return of(
                             createCategoryFail({
-                                error: errorMessage, //todo, remove after standardization of backend
+                                error: errorMessage,
                             })
                         );
                     })
