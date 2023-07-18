@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -14,7 +14,7 @@ import { Category } from "src/app/models/category.model";
     templateUrl: "./categories.component.html",
     styleUrls: ["./categories.component.css"],
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent implements OnInit, AfterViewInit {
     //Table columns
     displayedColumns: string[] = ["id", "name", "color", "actions"];
     dataSource = new MatTableDataSource<Category>([]);
@@ -28,11 +28,20 @@ export class CategoriesComponent implements OnInit {
 
     constructor(private store: Store<AppState>, private _liveAnnouncer: LiveAnnouncer) {}
 
+    ngAfterViewInit(): void {
+        this.dataSource.sort = this.sort ?? null;
+        this.dataSource.paginator = this.paginator ?? null;
+    }
+
     ngOnInit(): void {
         this.store.dispatch(getCategories());
 
-        this.categories$.subscribe((x) => {
-            this.refreshDataSource(x);
+        this.categories$.subscribe((categories) => {
+            this.dataSource = new MatTableDataSource(categories);
+            //Set sort and paginator here because sometimes afterViewInit will run before categories$ has received the values
+            //in that case, the attribution to dataSource will erase the sort and paginator
+            this.dataSource.sort = this.sort ?? null;
+            this.dataSource.paginator = this.paginator ?? null;
         });
     }
 
@@ -51,13 +60,5 @@ export class CategoriesComponent implements OnInit {
 
     deleteCategory(id: number) {
         this.store.dispatch(deleteCategory({ id: id }));
-    }
-
-    /** Refresh the dataSource and update the paginator and sort  */
-    private refreshDataSource(categories: Category[]) {
-        this.dataSource = new MatTableDataSource(categories);
-
-        this.dataSource.paginator = this.paginator ?? null;
-        this.dataSource.sort = this.sort ?? null;
     }
 }
