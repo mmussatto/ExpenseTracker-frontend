@@ -38,7 +38,12 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-    declarations: [CategoriesComponent, NewCategoryComponent, UpdateCategoryComponent],
+    declarations: [
+        CategoriesComponent,
+        NewCategoryComponent,
+        UpdateCategoryComponent,
+        CategoryTransactionsComponent,
+    ],
     imports: [
         CommonModule,
         HttpClientModule,
