@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { Store } from "@ngrx/store";
+import { Action, Store } from "@ngrx/store";
 import { CategoriesService } from "src/app/views/categories/services/categories.service";
 import { AppState } from "../app.state";
 import {
@@ -10,13 +10,16 @@ import {
     deleteCategory,
     deleteCategoryFail,
     deleteCategorySuccess,
+    getCategories,
     loadCategories,
     loadCategoriesFail,
     loadCategoriesSuccess,
 } from "./categories.actions";
-import { catchError, from, map, of, switchMap, tap } from "rxjs";
+import { catchError, filter, from, map, of, switchMap, tap, withLatestFrom } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
+import { selectCategoriesState } from "./categories.selectors";
+import { CategoriesState } from "./categories.reducer";
 
 @Injectable()
 export class CategoriesEffects {
@@ -29,6 +32,18 @@ export class CategoriesEffects {
     ) {}
 
     /* -------- Loading ---------- */
+    getCategories$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(getCategories),
+            withLatestFrom(this.store.select(selectCategoriesState)),
+            filter(
+                ([action, categories]: [Action, CategoriesState]) =>
+                    categories.status === "NOT_LOADED" || categories.status === "ERROR"
+            ),
+            map(() => loadCategories())
+        )
+    );
+
     loadCategories$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadCategories),

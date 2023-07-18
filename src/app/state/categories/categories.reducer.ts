@@ -9,7 +9,6 @@ import {
     createCategory,
     createCategorySuccess,
     createCategoryFail,
-    getCategories,
 } from "./categories.actions";
 import { Category } from "src/app/models/category.model";
 

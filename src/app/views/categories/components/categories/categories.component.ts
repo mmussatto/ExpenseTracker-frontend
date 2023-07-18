@@ -4,7 +4,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Store } from "@ngrx/store";
-import { deleteCategory, loadCategories } from "src/app/state/categories/categories.actions";
+import { deleteCategory, getCategories } from "src/app/state/categories/categories.actions";
 import { selectAllCategories } from "src/app/state/categories/categories.selectors";
 import { AppState } from "src/app/state/app.state";
 import { Category } from "src/app/models/category.model";
@@ -29,7 +29,7 @@ export class CategoriesComponent implements OnInit {
     constructor(private store: Store<AppState>, private _liveAnnouncer: LiveAnnouncer) {}
 
     ngOnInit(): void {
-        this.store.dispatch(loadCategories());
+        this.store.dispatch(getCategories());
 
         this.categories$.subscribe((x) => {
             console.log("Subscribe on init", x);

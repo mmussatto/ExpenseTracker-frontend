@@ -2,7 +2,9 @@ import { createAction, props } from "@ngrx/store";
 import { Category } from "src/app/models/category.model";
 
 /* -------- Loading ---------- */
-export const loadCategories = createAction("[Categories Component] Load categories");
+export const getCategories = createAction("[Categories Component] Get categories");
+
+export const loadCategories = createAction("[Categories API] Load categories");
 
 export const loadCategoriesSuccess = createAction(
     "[Categories API] Categories load success",
