@@ -22,7 +22,9 @@ export class UpdateCategoryComponent implements OnInit {
 
     //Categories from the store
     category$ = this.store.select(selectCategoryById(this.id));
+
     updateCategoryForm: any;
+    initialValues: any;
 
     constructor(
         private fb: FormBuilder,
@@ -43,8 +45,18 @@ export class UpdateCategoryComponent implements OnInit {
                 color: [category?.color, Validators.required],
             });
 
+            this.initialValues = this.updateCategoryForm.getRawValue();
+
             console.log("VALUE", this.updateCategoryForm.getRawValue());
+            console.log("Has changed: ", this.hasChanged());
         });
+    }
+
+    hasChanged(): boolean {
+        return (
+            JSON.stringify(this.updateCategoryForm.getRawValue()) !==
+            JSON.stringify(this.initialValues)
+        );
     }
 
     submit() {

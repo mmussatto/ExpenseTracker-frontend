@@ -67,7 +67,7 @@
         mat-raised-button
         color="primary"
         type="button"
-        [disabled]="!updateCategoryForm.valid"
+        [disabled]="!hasChanged() || !updateCategoryForm.valid"
         (click)="openDialog()"
       >
         Update category
