@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 import { Category } from "src/app/models/category.model";
+import { Transaction, TransactionPage } from "src/app/models/transaction.model";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -28,5 +29,12 @@ export class CategoriesService {
     deleteCategory(id: number): Observable<any> {
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url);
+    }
+
+    getCategoryTransactions(id: number): Observable<Transaction[]> {
+        const url = `${this.baseUrl}/${id}/transactions?size=100`;
+        return this.http
+            .get<TransactionPage>(url)
+            .pipe(map((transactionPage) => transactionPage.content));
     }
 }
