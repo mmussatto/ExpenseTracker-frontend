@@ -6,6 +6,9 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { Transaction } from "src/app/models/transaction.model";
+import { Store } from "@ngrx/store";
+import { AppState } from "src/app/state/app.state";
+import { selectCategoryById } from "src/app/state/categories/categories.selectors";
 
 @Component({
     selector: "app-category-transactions",
@@ -32,8 +35,12 @@ export class CategoryTransactionsComponent implements OnInit {
 
     id = Number(this.route.snapshot.paramMap.get("id"));
 
+    //Categories from the store
+    category$ = this.store.select(selectCategoryById(this.id));
+
     constructor(
         private route: ActivatedRoute,
+        private store: Store<AppState>,
         private categoriesService: CategoriesService,
         private _liveAnnouncer: LiveAnnouncer
     ) {}

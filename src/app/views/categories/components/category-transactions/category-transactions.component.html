@@ -1,7 +1,7 @@
 <div class="content">
   <!---------- Title  ---------->
   <div class="title">
-    <h1>Categories</h1>
+    <h1>{{ (category$ | async)?.name }}</h1>
   </div>
 
   <!---------- Add new category button  ---------->
