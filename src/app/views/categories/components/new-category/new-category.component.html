@@ -1,6 +1,7 @@
 <div class="container">
   <div class="form-container">
     <form [formGroup]="newCategoryForm" (submit)="submit()">
+      <!------- Name ------->
       <mat-form-field class="form-field">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" required />
@@ -15,6 +16,8 @@
           >
         </mat-error>
       </mat-form-field>
+
+      <!------- Color ------->
       <mat-form-field class="form-field">
         <mat-label>Color</mat-label>
         <mat-select formControlName="color">
@@ -33,6 +36,16 @@
           >
         </mat-error>
       </mat-form-field>
+
+      <!------- Buttons ------->
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        routerLink="/categories"
+      >
+        Go back
+      </button>
 
       <button
         mat-raised-button

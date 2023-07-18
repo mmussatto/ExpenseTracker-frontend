@@ -17,15 +17,12 @@ export class CategoriesService {
     }
 
     createNewCategory(category: Category): Observable<Category> {
-        console.log(category);
-
         return this.http.post<Category>(this.baseUrl, category);
     }
 
-    updateCategory(category: Category): Observable<Category> {
-        console.log(category);
-
-        return this.http.put<Category>(this.baseUrl, category);
+    updateCategory(id: number, category: Category): Observable<Category> {
+        const url = `${this.baseUrl}/${id}`;
+        return this.http.put<Category>(url, category);
     }
 
     deleteCategory(id: number): Observable<any> {

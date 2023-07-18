@@ -9,6 +9,9 @@ import {
     createCategory,
     createCategorySuccess,
     createCategoryFail,
+    updateCategory,
+    updateCategorySuccess,
+    updateCategoryFail,
 } from "./categories.actions";
 import { Category } from "src/app/models/category.model";
 
@@ -55,6 +58,26 @@ export const categoriesReducer = createReducer(
     })),
 
     on(createCategoryFail, (state, { error }) => ({
+        ...state,
+        error: error,
+        status: "ERROR" as const,
+    })),
+
+    /* -------- Updating ---------- */
+    on(updateCategory, (state) => ({ ...state, status: "PENDING" as const })),
+
+    on(updateCategorySuccess, (state, { category }) => ({
+        ...state,
+        categories: state.categories.map((value) =>
+            value.id === category.id
+                ? { ...value, name: category.name, color: category.color }
+                : value
+        ),
+        error: null,
+        status: "LOADED" as const,
+    })),
+
+    on(updateCategoryFail, (state, { error }) => ({
         ...state,
         error: error,
         status: "ERROR" as const,

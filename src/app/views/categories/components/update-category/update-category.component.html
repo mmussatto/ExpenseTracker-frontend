@@ -1,1 +1,77 @@
-<p>update-category works!</p>
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="updateCategoryForm" (submit)="submit()">
+      <!--------- Name -------->
+      <mat-form-field class="form-field">
+        <mat-label>Id</mat-label>
+        <input matInput formControlName="id" required />
+        <mat-error
+          *ngIf="
+            updateCategoryForm.controls.id.touched &&
+            updateCategoryForm.controls.id.invalid
+          "
+        >
+          <span *ngIf="updateCategoryForm.controls.id.errors?.['required']"
+            >This field is mandatory.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!--------- Name -------->
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error
+          *ngIf="
+            updateCategoryForm.controls.name.touched &&
+            updateCategoryForm.controls.name.invalid
+          "
+        >
+          <span *ngIf="updateCategoryForm.controls.name.errors?.['required']"
+            >This field is mandatory.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!--------- Color -------->
+      <mat-form-field class="form-field">
+        <mat-label>Color</mat-label>
+        <mat-select formControlName="color">
+          <mat-option *ngFor="let color of colors" [value]="color">{{
+            color
+          }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            updateCategoryForm.controls.color.touched &&
+            updateCategoryForm.controls.color.invalid
+          "
+        >
+          <span *ngIf="updateCategoryForm.controls.color.errors?.['required']"
+            >This field is mandatory.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!--------- Buttons -------->
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        routerLink="/categories"
+      >
+        Go back
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [disabled]="!hasChanged() || !updateCategoryForm.valid"
+        (click)="openDialog()"
+      >
+        Update category
+      </button>
+    </form>
+  </div>
+</div>

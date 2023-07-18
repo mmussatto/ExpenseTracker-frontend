@@ -8,3 +8,8 @@ export const selectAllCategories = createSelector(
     selectCategoriesState,
     (state: CategoriesState) => state.categories
 );
+
+export const selectCategoryById = (id: number) =>
+    createSelector(selectCategoriesState, (state: CategoriesState) => {
+        return state.categories.find((category) => category.id === id);
+    });

@@ -32,7 +32,6 @@ export class CategoriesComponent implements OnInit {
         this.store.dispatch(getCategories());
 
         this.categories$.subscribe((x) => {
-            console.log("Subscribe on init", x);
             this.refreshDataSource(x);
         });
     }
