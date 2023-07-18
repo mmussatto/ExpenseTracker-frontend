@@ -25,3 +25,7 @@ table {
 th.mat-sort-header-sorted {
     color: black;
 }
+
+button {
+    margin-right: 0.5rem;
+}
