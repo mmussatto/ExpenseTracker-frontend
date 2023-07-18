@@ -68,7 +68,11 @@ export const categoriesReducer = createReducer(
 
     on(updateCategorySuccess, (state, { category }) => ({
         ...state,
-        categories: [...state.categories, { ...category }],
+        categories: state.categories.map((value) =>
+            value.id === category.id
+                ? { ...value, name: category.name, color: category.color }
+                : value
+        ),
         error: null,
         status: "LOADED" as const,
     })),
