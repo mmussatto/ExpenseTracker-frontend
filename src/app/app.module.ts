@@ -22,6 +22,11 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatDialogModule } from "@angular/material/dialog";
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { categoriesReducer } from "./state/categories/categories.reducer";
+import { CategoriesEffects } from "./state/categories/categories.effects";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
     declarations: [
@@ -42,6 +47,9 @@ import { MatDialogModule } from "@angular/material/dialog";
         MatSidenavModule,
         MatListModule,
         MatDialogModule,
+        MatSnackBarModule,
+        StoreModule.forRoot({ categories: categoriesReducer }),
+        EffectsModule.forRoot([CategoriesEffects]),
     ],
     providers: [],
     bootstrap: [AppComponent],

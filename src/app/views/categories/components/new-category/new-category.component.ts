@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { CategoriesService, Category } from "../../services/categories.service";
-import { Router } from "@angular/router";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
+import { AppState } from "src/app/state/app.state";
+import { Store } from "@ngrx/store";
+import { createCategory } from "src/app/state/categories/categories.actions";
+import { Category } from "src/app/models/category.model";
 import { ConfirmDialogComponent } from "src/app/templates/dialogs/confirm-dialog/confirm-dialog.component";
 
 @Component({
@@ -11,7 +12,7 @@ import { ConfirmDialogComponent } from "src/app/templates/dialogs/confirm-dialog
     templateUrl: "./new-category.component.html",
     styleUrls: ["./new-category.component.css"],
 })
-export class NewCategoryComponent implements OnInit {
+export class NewCategoryComponent {
     colors = ["GREY", "PURPLE", "RED", "BLUE"];
 
     newCategoryForm = this.fb.group({
@@ -21,49 +22,16 @@ export class NewCategoryComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private categoryService: CategoriesService,
-        private router: Router,
-        private _snackBar: MatSnackBar,
+        private store: Store<AppState>,
         private dialog: MatDialog
     ) {}
-
-    ngOnInit(): void {}
 
     submit() {
         if (!this.newCategoryForm.valid) {
             return;
         }
-
-        const category = { ...this.newCategoryForm.value };
-
-        this.categoryService.createNewCategory(category as Category).subscribe({
-            error: (error) => {
-                //show snackbar with error message
-                this.openSnackBar(error.error.message ?? error.error.messages, "error");
-            },
-            complete: () => {
-                this.openSnackBar("Category created successfully", "success")
-                    .afterDismissed()
-                    .subscribe(() => {
-                        //navigate back to categories list after snackbar is dismissed
-                        this.router.navigate(["categories"]);
-                    });
-            },
-        });
-    }
-
-    //Function to show snack bar with custom styling
-    openSnackBar(message: string, type: string) {
-        let snackbarConfig = {};
-        if (type === "error") {
-            snackbarConfig = { panelClass: ["app-notification-error"] };
-        } else if (type === "success") {
-            snackbarConfig = { panelClass: ["app-notification-success"] };
-        }
-
-        snackbarConfig = { ...snackbarConfig, duration: 5000 };
-
-        return this._snackBar.open(message, "X", snackbarConfig);
+        const category = { ...this.newCategoryForm.value } as Category;
+        this.store.dispatch(createCategory({ category }));
     }
 
     openDialog(): void {
