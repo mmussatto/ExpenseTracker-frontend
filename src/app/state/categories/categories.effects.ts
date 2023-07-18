@@ -43,6 +43,7 @@ export class CategoriesEffects {
                 ([action, categories]: [Action, CategoriesState]) =>
                     categories.status === "NOT_LOADED" || categories.status === "ERROR"
             ),
+            tap((_) => console.log("[Categories Loaded]")),
             map(() => loadCategories())
         )
     );
