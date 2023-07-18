@@ -17,8 +17,6 @@ export class CategoriesService {
     }
 
     createNewCategory(category: Category): Observable<Category> {
-        console.log(category);
-
         return this.http.post<Category>(this.baseUrl, category);
     }
 

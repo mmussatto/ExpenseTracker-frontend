@@ -37,18 +37,15 @@ export class UpdateCategoryComponent implements OnInit {
         this.store.dispatch(getCategories());
 
         this.category$.subscribe((category) => {
-            console.log("CATEGORY", category);
-
+            //Update form with category values
             this.updateCategoryForm = this.fb.group({
                 id: [{ value: category?.id?.toString(), disabled: true }, Validators.required],
                 name: [category?.name, Validators.required],
                 color: [category?.color, Validators.required],
             });
 
+            //Save initial values for comparing in hasChanged()
             this.initialValues = this.updateCategoryForm.getRawValue();
-
-            console.log("VALUE", this.updateCategoryForm.getRawValue());
-            console.log("Has changed: ", this.hasChanged());
         });
     }
 
@@ -63,21 +60,20 @@ export class UpdateCategoryComponent implements OnInit {
         if (!this.updateCategoryForm.valid) {
             return;
         }
-        console.log(this.updateCategoryForm.getRawValue());
 
+        //Get category values to send to backend (does not get the id because it needs to be null)
         const category = { ...this.updateCategoryForm.value } as Category;
-        console.log(category);
 
+        //Dispatch update action
         this.store.dispatch(updateCategory({ id: this.id, category }));
     }
 
     openDialog(): void {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-            data: { info: "Crate new category?" },
+            data: { info: "Update category?" },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`);
             if (result === true) {
                 this.submit();
             }
