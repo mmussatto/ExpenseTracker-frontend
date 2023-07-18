@@ -106,9 +106,9 @@ export class CategoriesEffects {
     updateCategory$ = createEffect(() =>
         this.actions$.pipe(
             ofType(updateCategory),
-            switchMap(({ category }) =>
+            switchMap(({ id, category }) =>
                 // Call the update method, convert it to an observable
-                from(this.categoriesService.updateCategory(category)).pipe(
+                from(this.categoriesService.updateCategory(id, category)).pipe(
                     //If success, show snackbar and redirect to categories list page
                     tap(() => {
                         this._snackBar

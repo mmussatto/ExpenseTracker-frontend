@@ -35,7 +35,7 @@ export const createCategoryFail = createAction(
 /* -------- Updating ---------- */
 export const updateCategory = createAction(
     "[New Category Component] Update new category",
-    props<{ category: Category }>()
+    props<{ id: number; category: Category }>()
 );
 
 export const updateCategorySuccess = createAction(
