@@ -15,3 +15,7 @@
 .form-field {
     display: block;
 }
+
+button {
+    margin: 0.5rem;
+}
