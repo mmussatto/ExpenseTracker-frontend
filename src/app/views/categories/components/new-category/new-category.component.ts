@@ -6,6 +6,7 @@ import { Store } from "@ngrx/store";
 import { createCategory } from "src/app/state/categories/categories.actions";
 import { Category } from "src/app/models/category.model";
 import { ConfirmDialogComponent } from "src/app/templates/dialogs/confirm-dialog/confirm-dialog.component";
+import { colors } from "src/app/models/colors.model";
 
 @Component({
     selector: "app-new-category",
@@ -13,7 +14,7 @@ import { ConfirmDialogComponent } from "src/app/templates/dialogs/confirm-dialog
     styleUrls: ["./new-category.component.css"],
 })
 export class NewCategoryComponent {
-    colors = ["GREY", "PURPLE", "RED", "BLUE"];
+    colors = colors;
 
     newCategoryForm = this.fb.group({
         name: ["", Validators.required],
