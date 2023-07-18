@@ -32,6 +32,22 @@ export const createCategoryFail = createAction(
     props<{ error: string }>()
 );
 
+/* -------- Updating ---------- */
+export const updateCategory = createAction(
+    "[New Category Component] Update new category",
+    props<{ category: Category }>()
+);
+
+export const updateCategorySuccess = createAction(
+    "[Categories API] Category update success",
+    props<{ category: Category }>()
+);
+
+export const updateCategoryFail = createAction(
+    "[Categories API] Category update failure",
+    props<{ error: string }>()
+);
+
 /* -------- Deleting ---------- */
 export const deleteCategory = createAction(
     "[Category Component] Delete category",
