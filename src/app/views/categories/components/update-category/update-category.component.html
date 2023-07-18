@@ -2,8 +2,8 @@
   <div class="form-container">
     <form [formGroup]="updateCategoryForm" (submit)="submit()">
       <!--------- Name -------->
-      <mat-label>Id</mat-label>
       <mat-form-field class="form-field">
+        <mat-label>Id</mat-label>
         <input matInput formControlName="id" required />
         <mat-error
           *ngIf="
@@ -18,8 +18,8 @@
       </mat-form-field>
 
       <!--------- Name -------->
-      <mat-label>Name</mat-label>
       <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
         <input matInput formControlName="name" required />
         <mat-error
           *ngIf="
@@ -34,8 +34,8 @@
       </mat-form-field>
 
       <!--------- Color -------->
-      <mat-label>Color</mat-label>
       <mat-form-field class="form-field">
+        <mat-label>Color</mat-label>
         <mat-select formControlName="color">
           <mat-option *ngFor="let color of colors" [value]="color">{{
             color
