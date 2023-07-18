@@ -1,13 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Category } from "src/app/models/category.model";
 import { environment } from "src/environments/environment";
-
-export interface Category {
-    id?: number;
-    name: string;
-    color: string;
-}
 
 @Injectable({
     providedIn: "root",
@@ -30,7 +25,7 @@ export class CategoriesService {
     updateCategory(category: Category): Observable<Category> {
         console.log(category);
 
-        return this.http.put<Category>(this.baseUrl, category);
+        return this.http.put<Category>(`${this.baseUrl}/${category.id}`, category);
     }
 
     deleteCategory(id: number): Observable<any> {

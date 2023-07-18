@@ -12,12 +12,12 @@
   </div>
 
   <!---------- Loading  ---------->
-  <mat-spinner *ngIf="!categories.length" class="spinner"></mat-spinner>
+  <mat-spinner *ngIf="!dataSource.data.length" class="spinner"></mat-spinner>
 
   <!---------- Table  ---------->
   <div
     class="mat-elevation-z8"
-    [style.display]="categories.length ? 'block' : 'none'"
+    [style.display]="dataSource.data.length ? 'block' : 'none'"
   >
     <table
       mat-table
