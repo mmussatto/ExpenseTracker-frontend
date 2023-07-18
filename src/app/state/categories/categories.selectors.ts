@@ -2,9 +2,9 @@ import { createSelector } from "@ngrx/store";
 import { AppState } from "../app.state";
 import { CategoriesState } from "./categories.reducer";
 
-export const selectCategories = (state: AppState) => state.categories;
+export const selectCategoriesState = (state: AppState) => state.categories;
 
 export const selectAllCategories = createSelector(
-    selectCategories,
+    selectCategoriesState,
     (state: CategoriesState) => state.categories
 );

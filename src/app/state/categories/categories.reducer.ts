@@ -9,6 +9,7 @@ import {
     createCategory,
     createCategorySuccess,
     createCategoryFail,
+    getCategories,
 } from "./categories.actions";
 import { Category } from "src/app/models/category.model";
 
@@ -16,63 +17,63 @@ import { Category } from "src/app/models/category.model";
 export interface CategoriesState {
     categories: Category[];
     error: string | null;
-    status: "pending" | "loading" | "error" | "success";
+    status: "NOT_LOADED" | "LOADING" | "LOADED" | "ERROR" | "PENDING";
 }
 
 export const initialState: CategoriesState = {
     categories: [],
     error: null,
-    status: "pending",
+    status: "NOT_LOADED",
 };
 
 export const categoriesReducer = createReducer(
     initialState,
 
     /* -------- Loading ---------- */
-    on(loadCategories, (state) => ({ ...state, status: "loading" as const })),
+    on(loadCategories, (state) => ({ ...state, status: "LOADING" as const })),
 
     on(loadCategoriesSuccess, (state, { categories }) => ({
         ...state,
         categories: categories,
         error: null,
-        status: "success" as const,
+        status: "LOADED" as const,
     })),
 
     on(loadCategoriesFail, (state, { error }) => ({
         ...state,
         error: error,
-        status: "error" as const,
+        status: "ERROR" as const,
     })),
 
     /* -------- Creating ---------- */
-    on(createCategory, (state) => ({ ...state, status: "pending" as const })),
+    on(createCategory, (state) => ({ ...state, status: "PENDING" as const })),
 
     on(createCategorySuccess, (state, { category }) => ({
         ...state,
         categories: [...state.categories, { ...category }],
         error: null,
-        status: "success" as const,
+        status: "LOADED" as const,
     })),
 
     on(createCategoryFail, (state, { error }) => ({
         ...state,
         error: error,
-        status: "error" as const,
+        status: "ERROR" as const,
     })),
 
     /* -------- Deleting ---------- */
-    on(deleteCategory, (state, { id }) => ({ ...state, status: "pending" as const })),
+    on(deleteCategory, (state, { id }) => ({ ...state, status: "PENDING" as const })),
 
     on(deleteCategorySuccess, (state, { id }) => ({
         ...state,
         categories: state.categories.filter((c) => c.id != id),
         error: null,
-        status: "success" as const,
+        status: "LOADED" as const,
     })),
 
     on(deleteCategoryFail, (state, { error }) => ({
         ...state,
         error: error,
-        status: "error" as const,
+        status: "ERROR" as const,
     }))
 );
