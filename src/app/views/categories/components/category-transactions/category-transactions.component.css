@@ -23,6 +23,11 @@
     }
 }
 
+.no-transactions {
+    margin-top: 5rem;
+    text-align: center;
+}
+
 /* ---- Table ---- */
 .transactions-table {
     overflow: auto;

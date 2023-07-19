@@ -35,6 +35,8 @@ export class CategoryTransactionsComponent implements OnInit {
 
     id = Number(this.route.snapshot.paramMap.get("id"));
 
+    hasTransactions: boolean = true;
+
     //Categories from the store
     category$ = this.store.select(selectCategoryById(this.id));
 
@@ -49,7 +51,11 @@ export class CategoryTransactionsComponent implements OnInit {
         this.categoriesService.getCategoryTransactions(this.id).subscribe((transactions) => {
             console.log(transactions);
 
-            this.refreshDataSource(transactions);
+            if (transactions.length === 0) {
+                this.hasTransactions = false;
+            } else {
+                this.refreshDataSource(transactions);
+            }
         });
     }
 
