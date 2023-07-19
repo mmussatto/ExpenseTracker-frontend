@@ -8,6 +8,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { CategoriesComponent } from "./components/categories/categories.component";
 import { NewCategoryComponent } from "./components/new-category/new-category.component";
 import { UpdateCategoryComponent } from "./components/update-category/update-category.component";
+import { CategoryTransactionsComponent } from "./components/category-transactions/category-transactions.component";
 
 //Services
 import { CategoriesService } from "./services/categories.service";
@@ -30,13 +31,19 @@ const ROUTES: Routes = [
         path: "categories",
         children: [
             { path: ":id/update", component: UpdateCategoryComponent },
+            { path: ":id/transactions", component: CategoryTransactionsComponent },
             { path: "new", component: NewCategoryComponent },
         ],
     },
 ];
 
 @NgModule({
-    declarations: [CategoriesComponent, NewCategoryComponent, UpdateCategoryComponent],
+    declarations: [
+        CategoriesComponent,
+        NewCategoryComponent,
+        UpdateCategoryComponent,
+        CategoryTransactionsComponent,
+    ],
     imports: [
         CommonModule,
         HttpClientModule,

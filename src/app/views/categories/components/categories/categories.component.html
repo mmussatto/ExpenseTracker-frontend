@@ -5,10 +5,10 @@
   </div>
 
   <!---------- Add new category button  ---------->
-  <div class="add-category-container">
-    <a routerLink="new" mat-raised-button color="accent">
+  <div class="add-category-button">
+    <button mat-raised-button color="accent" type="button" routerLink="new">
       Create new category
-    </a>
+    </button>
   </div>
 
   <!---------- Loading  ---------->
@@ -16,13 +16,15 @@
 
   <!---------- Table  ---------->
   <div
-    class="mat-elevation-z8"
+    class="categories-table mat-elevation-z8"
     [style.display]="dataSource.data.length ? 'block' : 'none'"
   >
     <table
       mat-table
       [dataSource]="dataSource"
       matSort
+      matSortActive="id"
+      matSortDirection="asc"
       (matSortChange)="announceSortChange($event)"
     >
       <!-- Id Column -->
@@ -66,16 +68,9 @@
 
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by symbol"
-          mat-sort-disabled
-        >
-          Actions
-        </th>
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let category">
+          <!-- Edit -->
           <button
             mat-icon-button
             routerLink="{{ category.id }}/update"
@@ -83,6 +78,17 @@
           >
             <mat-icon>edit</mat-icon>
           </button>
+
+          <!-- Transactions -->
+          <button
+            mat-icon-button
+            aria-label="Icon button with a trash can"
+            routerLink="{{ category.id }}/transactions"
+          >
+            <mat-icon>local_atm</mat-icon>
+          </button>
+
+          <!-- Delete -->
           <button
             mat-icon-button
             color="warn"
@@ -94,7 +100,7 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <mat-paginator
