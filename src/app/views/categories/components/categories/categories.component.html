@@ -16,13 +16,15 @@
 
   <!---------- Table  ---------->
   <div
-    class="mat-elevation-z8, categories-table"
+    class="categories-table mat-elevation-z8"
     [style.display]="dataSource.data.length ? 'block' : 'none'"
   >
     <table
       mat-table
       [dataSource]="dataSource"
       matSort
+      matSortActive="id"
+      matSortDirection="asc"
       (matSortChange)="announceSortChange($event)"
     >
       <!-- Id Column -->
@@ -98,7 +100,7 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <mat-paginator

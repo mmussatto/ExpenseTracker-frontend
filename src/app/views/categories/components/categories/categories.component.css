@@ -30,12 +30,6 @@ table {
     width: 100%;
 }
 
-div.mat-elevation-z8 {
-}
-table.mat-table.mat-table {
-    min-width: 450px;
-}
-
 :host ::ng-deep .mat-sort-header-container {
     display: flex;
     justify-content: center;
