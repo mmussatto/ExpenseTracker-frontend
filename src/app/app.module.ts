@@ -11,6 +11,7 @@ import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { NavComponent } from "./components/nav/nav.component";
+import { NotImplementedComponent } from "./components/not-implemented/not-implemented.component";
 
 //View modules
 import { CategoriesModule } from "./views/categories/categories.module";
@@ -35,6 +36,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         FooterComponent,
         NavComponent,
         ConfirmDialogComponent,
+        NotImplementedComponent,
     ],
     imports: [
         BrowserModule,
