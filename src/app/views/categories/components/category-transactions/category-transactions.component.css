@@ -1,6 +1,7 @@
 .content {
     width: 90%;
     margin: 1.4rem auto auto auto;
+    justify-content: center;
 }
 
 .title {
@@ -13,19 +14,30 @@
     margin: 1.4rem auto auto auto;
 }
 
-.add-category-container {
+.add-transaction-button {
     display: flex;
     padding-bottom: 1rem;
+
+    & button {
+        margin-right: 0.5rem;
+    }
+}
+
+/* ---- Table ---- */
+.transactions-table {
+    overflow: auto;
 }
 
 table {
     width: 100%;
 }
 
-th.mat-sort-header-sorted {
-    color: black;
+:host ::ng-deep .mat-sort-header-container {
+    display: flex;
+    justify-content: center;
 }
 
-button {
-    margin-right: 0.5rem;
+/* ---- Paginator ---- */
+.paginator {
+    margin-bottom: 1rem;
 }

@@ -5,7 +5,7 @@
   </div>
 
   <!---------- Add new category button  ---------->
-  <div class="add-category-container">
+  <div class="add-category-button">
     <button mat-raised-button color="accent" type="button" routerLink="new">
       Create new category
     </button>
@@ -16,7 +16,7 @@
 
   <!---------- Table  ---------->
   <div
-    class="mat-elevation-z8"
+    class="mat-elevation-z8, categories-table"
     [style.display]="dataSource.data.length ? 'block' : 'none'"
   >
     <table

@@ -1,6 +1,7 @@
 .content {
     width: 90%;
     margin: 1.4rem auto auto auto;
+    justify-content: center;
 }
 
 .title {
@@ -13,19 +14,47 @@
     margin: 1.4rem auto auto auto;
 }
 
-.add-category-container {
+.add-category-button {
     display: flex;
     padding-bottom: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* ---- Table ---- */
+.categories-table {
+    margin-bottom: 1rem;
+    overflow: auto;
 }
 
 table {
     width: 100%;
 }
 
-th.mat-sort-header-sorted {
-    color: black;
+div.mat-elevation-z8 {
+}
+table.mat-table.mat-table {
+    min-width: 450px;
 }
 
-button {
-    margin-right: 0.5rem;
+:host ::ng-deep .mat-sort-header-container {
+    display: flex;
+    justify-content: center;
+}
+
+.mat-column-id {
+    width: 10%;
+    text-align: center;
+}
+.mat-column-name {
+    width: 25%;
+    text-align: center;
+}
+.mat-column-color {
+    width: 25%;
+    text-align: center;
+}
+
+.mat-column-actions {
+    width: 40%;
+    text-align: center;
 }
