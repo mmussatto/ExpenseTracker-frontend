@@ -66,15 +66,7 @@
 
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by symbol"
-          mat-sort-disabled
-        >
-          Actions
-        </th>
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let category">
           <!-- Edit -->
           <button
