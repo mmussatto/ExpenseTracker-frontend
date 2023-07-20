@@ -54,14 +54,13 @@ export class CategoryTransactionsComponent implements OnInit {
 
     ngOnInit(): void {
         this.categoriesService.getCategoryTransactions(this.id).subscribe((transactions) => {
-            console.log(transactions);
+            console.log(`[Category ${this.id} Transactions]`, transactions);
 
             if (transactions.length === 0) {
                 this.hasTransactions = false;
             } else {
                 this.refreshDataSource(transactions);
                 this.calculateTotalAmount(transactions);
-                console.log(this.totalAmount);
             }
         });
     }
