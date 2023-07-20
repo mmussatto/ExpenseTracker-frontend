@@ -5,7 +5,7 @@
   </div>
 
   <!---------- Add new category button  ---------->
-  <div class="add-transaction-button">
+  <div class="top">
     <button
       mat-raised-button
       color="accent"
@@ -23,6 +23,13 @@
     >
       Go back
     </button>
+
+    <!---------- Total Amount  ---------->
+    <div class="total-amount" *ngIf="dataSource.data.length && hasTransactions">
+      <mat-card>
+        <mat-card-content>Total: {{ totalAmount | currency }}</mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
   <!---------- No transactions message  ---------->

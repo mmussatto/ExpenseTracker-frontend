@@ -33,12 +33,17 @@ export class CategoryTransactionsComponent implements OnInit {
     @ViewChild(MatSort) sort?: MatSort | null;
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
+    //Category's id
     id = Number(this.route.snapshot.paramMap.get("id"));
 
+    //Flags
     hasTransactions: boolean = true;
 
     //Categories from the store
     category$ = this.store.select(selectCategoryById(this.id));
+
+    //Total amount
+    totalAmount = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -55,6 +60,8 @@ export class CategoryTransactionsComponent implements OnInit {
                 this.hasTransactions = false;
             } else {
                 this.refreshDataSource(transactions);
+                this.calculateTotalAmount(transactions);
+                console.log(this.totalAmount);
             }
         });
     }
@@ -70,6 +77,10 @@ export class CategoryTransactionsComponent implements OnInit {
         } else {
             this._liveAnnouncer.announce("Sorting cleared");
         }
+    }
+
+    private calculateTotalAmount(transactions: Transaction[]) {
+        this.totalAmount = transactions.reduce((preVal, currVal) => preVal + currVal.amount, 0);
     }
 
     /** Refresh the dataSource and update the paginator and sort  */

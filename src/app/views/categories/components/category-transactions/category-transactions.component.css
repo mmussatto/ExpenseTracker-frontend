@@ -14,13 +14,18 @@
     margin: 1.4rem auto auto auto;
 }
 
-.add-transaction-button {
+.top {
     display: flex;
+    align-items: center;
     padding-bottom: 1rem;
 
     & button {
         margin-right: 0.5rem;
     }
+}
+
+.total-amount {
+    margin-left: auto;
 }
 
 .no-transactions {
