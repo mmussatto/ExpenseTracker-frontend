@@ -5,7 +5,10 @@ import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Store } from "@ngrx/store";
 import { deleteCategory, getCategories } from "src/app/state/categories/categories.actions";
-import { selectAllCategories } from "src/app/state/categories/categories.selectors";
+import {
+    selectAllCategories,
+    selectCategoriesState,
+} from "src/app/state/categories/categories.selectors";
 import { AppState } from "src/app/state/app.state";
 import { Category } from "src/app/models/category.model";
 
@@ -26,6 +29,8 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort?: MatSort | null;
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
+    serverError: boolean = false;
+
     constructor(private store: Store<AppState>, private _liveAnnouncer: LiveAnnouncer) {}
 
     ngAfterViewInit(): void {
@@ -42,6 +47,14 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
             //in that case, the attribution to dataSource will erase the sort and paginator
             this.dataSource.sort = this.sort ?? null;
             this.dataSource.paginator = this.paginator ?? null;
+        });
+
+        this.store.select(selectCategoriesState).subscribe((state) => {
+            if (state.status === "ERROR" && state.error === "Server Error") {
+                this.serverError = true;
+            } else {
+                this.serverError = false;
+            }
         });
     }
 
