@@ -33,6 +33,10 @@ const routes: Routes = [
         path: "not-implemented",
         component: NotImplementedComponent,
     },
+    {
+        path: "**",
+        redirectTo: "",
+    },
 ];
 
 @NgModule({
