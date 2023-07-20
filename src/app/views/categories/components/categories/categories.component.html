@@ -5,7 +5,7 @@
   </div>
 
   <!---------- Add new category button  ---------->
-  <div class="add-category-button">
+  <div class="add-category-button" *ngIf="dataSource.data.length">
     <button mat-raised-button color="accent" type="button" routerLink="new">
       Create new category
     </button>
