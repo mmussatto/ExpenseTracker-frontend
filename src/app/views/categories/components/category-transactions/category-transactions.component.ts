@@ -22,10 +22,10 @@ export class CategoryTransactionsComponent implements OnInit {
         "date",
         "amount",
         "description",
-        "category",
-        "paymentMethod",
-        "vendor",
-        "tags",
+        "category.name",
+        "paymentMethod.name",
+        "vendor.name",
+        "tags.name",
     ];
     dataSource = new MatTableDataSource<Transaction>([]);
 
@@ -77,6 +77,22 @@ export class CategoryTransactionsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(transactions);
 
         this.dataSource.paginator = this.paginator ?? null;
+
+        //Custom sorting for transactions property name
+        this.dataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+                case "paymentMethod.name": {
+                    return item.paymentMethod.name;
+                }
+                case "vendor.name": {
+                    return item.vendor.name;
+                }
+                default: {
+                    return item[property as keyof Transaction]?.toString() || "";
+                }
+            }
+        };
+
         this.dataSource.sort = this.sort ?? null;
     }
 }
