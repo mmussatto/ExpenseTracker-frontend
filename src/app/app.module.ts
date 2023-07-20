@@ -12,6 +12,7 @@ import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { NavComponent } from "./components/nav/nav.component";
 import { NotImplementedComponent } from "./components/not-implemented/not-implemented.component";
+import { HomeComponent } from "./components/home/home.component";
 
 //View modules
 import { CategoriesModule } from "./views/categories/categories.module";
@@ -37,6 +38,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         NavComponent,
         ConfirmDialogComponent,
         NotImplementedComponent,
+        HomeComponent,
     ],
     imports: [
         BrowserModule,
