@@ -11,6 +11,8 @@ import {
 } from "src/app/state/categories/categories.selectors";
 import { AppState } from "src/app/state/app.state";
 import { Category } from "src/app/models/category.model";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "src/app/templates/dialogs/confirm-dialog/confirm-dialog.component";
 
 @Component({
     selector: "app-categories",
@@ -31,7 +33,11 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
 
     serverError: boolean = false;
 
-    constructor(private store: Store<AppState>, private _liveAnnouncer: LiveAnnouncer) {}
+    constructor(
+        private store: Store<AppState>,
+        private _liveAnnouncer: LiveAnnouncer,
+        private dialog: MatDialog
+    ) {}
 
     ngAfterViewInit(): void {
         this.dataSource.sort = this.sort ?? null;
@@ -73,5 +79,18 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
 
     deleteCategory(id: number) {
         this.store.dispatch(deleteCategory({ id: id }));
+    }
+
+    openConfirmDeleteDialog(id: number): void {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            data: { info: "Delete category?" },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+            if (result === true) {
+                this.deleteCategory(id);
+            }
+        });
     }
 }
