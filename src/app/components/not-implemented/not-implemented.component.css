@@ -2,9 +2,15 @@
     margin: auto;
     width: 50%;
     padding: 1rem;
+    align-content: center;
 }
 
 .message {
-    padding: 6rem 0;
+    padding: 6rem 0 3rem;
+    text-align: center;
+}
+
+.button {
+    align-self: center;
     text-align: center;
 }

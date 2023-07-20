@@ -57,7 +57,11 @@ export class CategoriesEffects {
                     // Take the returned value and return a new success action containing the Categories
                     map((categories) => loadCategoriesSuccess({ categories: categories })),
                     // Or... if it errors return a new failure action containing the error
-                    catchError((error) => of(loadCategoriesFail({ error })))
+                    catchError((error) => {
+                        let errorMessage = "";
+                        if (error.status == 504) errorMessage = "Server Error";
+                        return of(loadCategoriesFail({ error: errorMessage }));
+                    })
                 )
             )
         )

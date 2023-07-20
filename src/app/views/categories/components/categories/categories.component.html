@@ -4,15 +4,29 @@
     <h1>Categories</h1>
   </div>
 
+  <!---------- Server error message  ---------->
+  <div class="server-error" *ngIf="serverError">
+    <h2>
+      Could not connect to server!
+      <mat-icon>sentiment_very_dissatisfied</mat-icon>
+    </h2>
+  </div>
+
   <!---------- Add new category button  ---------->
-  <div class="add-category-button">
+  <div
+    class="add-category-button"
+    *ngIf="dataSource.data.length && !serverError"
+  >
     <button mat-raised-button color="accent" type="button" routerLink="new">
       Create new category
     </button>
   </div>
 
   <!---------- Loading  ---------->
-  <mat-spinner *ngIf="!dataSource.data.length" class="spinner"></mat-spinner>
+  <mat-spinner
+    *ngIf="!dataSource.data.length && !serverError"
+    class="spinner"
+  ></mat-spinner>
 
   <!---------- Table  ---------->
   <div
@@ -93,7 +107,7 @@
             mat-icon-button
             color="warn"
             aria-label="Icon button with a trash can"
-            (click)="deleteCategory(category.id)"
+            (click)="openConfirmDeleteDialog(category.id)"
           >
             <mat-icon>delete</mat-icon>
           </button>

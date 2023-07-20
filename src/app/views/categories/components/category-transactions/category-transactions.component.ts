@@ -22,10 +22,10 @@ export class CategoryTransactionsComponent implements OnInit {
         "date",
         "amount",
         "description",
-        "category",
-        "paymentMethod",
-        "vendor",
-        "tags",
+        "category.name",
+        "paymentMethod.name",
+        "vendor.name",
+        "tags.name",
     ];
     dataSource = new MatTableDataSource<Transaction>([]);
 
@@ -33,12 +33,17 @@ export class CategoryTransactionsComponent implements OnInit {
     @ViewChild(MatSort) sort?: MatSort | null;
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
+    //Category's id
     id = Number(this.route.snapshot.paramMap.get("id"));
 
+    //Flags
     hasTransactions: boolean = true;
 
     //Categories from the store
     category$ = this.store.select(selectCategoryById(this.id));
+
+    //Total amount
+    totalAmount = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -49,12 +54,13 @@ export class CategoryTransactionsComponent implements OnInit {
 
     ngOnInit(): void {
         this.categoriesService.getCategoryTransactions(this.id).subscribe((transactions) => {
-            console.log(transactions);
+            console.log(`[Category ${this.id} Transactions]`, transactions);
 
             if (transactions.length === 0) {
                 this.hasTransactions = false;
             } else {
                 this.refreshDataSource(transactions);
+                this.calculateTotalAmount(transactions);
             }
         });
     }
@@ -72,11 +78,31 @@ export class CategoryTransactionsComponent implements OnInit {
         }
     }
 
+    private calculateTotalAmount(transactions: Transaction[]) {
+        this.totalAmount = transactions.reduce((preVal, currVal) => preVal + currVal.amount, 0);
+    }
+
     /** Refresh the dataSource and update the paginator and sort  */
     private refreshDataSource(transactions: Transaction[]) {
         this.dataSource = new MatTableDataSource(transactions);
 
         this.dataSource.paginator = this.paginator ?? null;
+
+        //Custom sorting for transactions property name
+        this.dataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+                case "paymentMethod.name": {
+                    return item.paymentMethod.name;
+                }
+                case "vendor.name": {
+                    return item.vendor.name;
+                }
+                default: {
+                    return item[property as keyof Transaction]?.toString() || "";
+                }
+            }
+        };
+
         this.dataSource.sort = this.sort ?? null;
     }
 }

@@ -5,7 +5,7 @@
   </div>
 
   <!---------- Add new category button  ---------->
-  <div class="add-transaction-button">
+  <div class="top">
     <button
       mat-raised-button
       color="accent"
@@ -23,6 +23,13 @@
     >
       Go back
     </button>
+
+    <!---------- Total Amount  ---------->
+    <div class="total-amount" *ngIf="dataSource.data.length && hasTransactions">
+      <mat-card>
+        <mat-card-content>Total: {{ totalAmount | currency }}</mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
   <!---------- No transactions message  ---------->
@@ -105,7 +112,7 @@
       <mat-text-column name="description"></mat-text-column>
 
       <!-- Category Column -->
-      <ng-container matColumnDef="category">
+      <ng-container matColumnDef="category.name">
         <th
           mat-header-cell
           *matHeaderCellDef
@@ -120,12 +127,12 @@
       </ng-container>
 
       <!-- Payment Method Column -->
-      <ng-container matColumnDef="paymentMethod">
+      <ng-container matColumnDef="paymentMethod.name">
         <th
           mat-header-cell
           *matHeaderCellDef
           mat-sort-header
-          sortActionDescription="Sort by paymentMethod"
+          sortActionDescription="Sort by paymentMethod name"
         >
           Payment Method
         </th>
@@ -135,7 +142,7 @@
       </ng-container>
 
       <!-- Vendor Column -->
-      <ng-container matColumnDef="vendor">
+      <ng-container matColumnDef="vendor.name">
         <th
           mat-header-cell
           *matHeaderCellDef
@@ -150,19 +157,14 @@
       </ng-container>
 
       <!-- Tags Column -->
-      <ng-container matColumnDef="tags">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by tags"
-        >
-          Tags
-        </th>
+      <ng-container matColumnDef="tags.name">
+        <th mat-header-cell *matHeaderCellDef>Tags</th>
         <td mat-cell *matCellDef="let transaction">
-          <ng-container *ngFor="let tag of transaction?.tags">
-            *{{ tag.name }}
-          </ng-container>
+          <mat-chip-listbox>
+            <ng-container *ngFor="let tag of transaction?.tags">
+              <mat-chip color="tag.color">{{ tag.name }}</mat-chip>
+            </ng-container>
+          </mat-chip-listbox>
         </td>
       </ng-container>
 

@@ -25,8 +25,14 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatCardModule } from "@angular/material/card";
 
 const ROUTES: Routes = [
+    {
+        path: "categories",
+        component: CategoriesComponent,
+    },
     {
         path: "categories",
         children: [
@@ -60,6 +66,8 @@ const ROUTES: Routes = [
         MatButtonModule,
         MatSnackBarModule,
         MatDialogModule,
+        MatChipsModule,
+        MatCardModule,
     ],
     providers: [CategoriesService],
     exports: [RouterModule],
