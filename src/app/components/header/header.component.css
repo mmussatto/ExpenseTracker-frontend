@@ -10,3 +10,8 @@ span {
     display: flex;
     font-size: 1.3rem;
 }
+
+a {
+    text-decoration: none;
+    color: rgb(221, 218, 218);
+}
