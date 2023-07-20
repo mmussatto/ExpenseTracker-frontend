@@ -25,6 +25,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatChipsModule } from "@angular/material/chips";
 
 const ROUTES: Routes = [
     {
@@ -64,6 +65,7 @@ const ROUTES: Routes = [
         MatButtonModule,
         MatSnackBarModule,
         MatDialogModule,
+        MatChipsModule,
     ],
     providers: [CategoriesService],
     exports: [RouterModule],

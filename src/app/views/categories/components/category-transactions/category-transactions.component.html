@@ -153,9 +153,11 @@
       <ng-container matColumnDef="tags.name">
         <th mat-header-cell *matHeaderCellDef>Tags</th>
         <td mat-cell *matCellDef="let transaction">
-          <ng-container *ngFor="let tag of transaction?.tags">
-            *{{ tag.name }}
-          </ng-container>
+          <mat-chip-listbox>
+            <ng-container *ngFor="let tag of transaction?.tags">
+              <mat-chip color="tag.color">{{ tag.name }}</mat-chip>
+            </ng-container>
+          </mat-chip-listbox>
         </td>
       </ng-container>
 
