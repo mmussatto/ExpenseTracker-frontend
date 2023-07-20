@@ -14,10 +14,6 @@ const routes: Routes = [
         component: NotImplementedComponent,
     },
     {
-        path: "categories",
-        component: CategoriesComponent,
-    },
-    {
         path: "payment-methods",
         component: NotImplementedComponent,
     },

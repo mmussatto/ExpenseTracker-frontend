@@ -29,6 +29,10 @@ import { MatDialogModule } from "@angular/material/dialog";
 const ROUTES: Routes = [
     {
         path: "categories",
+        component: CategoriesComponent,
+    },
+    {
+        path: "categories",
         children: [
             { path: ":id/update", component: UpdateCategoryComponent },
             { path: ":id/transactions", component: CategoryTransactionsComponent },
