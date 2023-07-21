@@ -69,7 +69,15 @@ export const vendorReducer = createReducer(
     on(updateVendorSuccess, (state, { vendor }) => ({
         ...state,
         vendors: state.vendors.map((value) =>
-            value.id === vendor.id ? { ...value, name: vendor.name, color: vendor.type } : value
+            value.id === vendor.id
+                ? {
+                      ...value,
+                      name: vendor.name,
+                      type: vendor.type,
+                      url: vendor?.url,
+                      address: vendor?.address,
+                  }
+                : value
         ),
         error: null,
         status: "LOADED" as const,
