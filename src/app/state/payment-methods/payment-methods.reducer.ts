@@ -71,7 +71,7 @@ export const paymentMethodsReducer = createReducer(
         ...state,
         paymentMethods: state.paymentMethods.map((value) =>
             value.id === paymentMethod.id
-                ? { ...value, name: paymentMethod.name, color: paymentMethod.type }
+                ? { ...value, name: paymentMethod.name, type: paymentMethod.type }
                 : value
         ),
         error: null,
