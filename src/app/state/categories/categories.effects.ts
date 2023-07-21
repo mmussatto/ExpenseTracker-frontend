@@ -59,7 +59,7 @@ export class CategoriesEffects {
                     // Or... if it errors return a new failure action containing the error
                     catchError((error) => {
                         let errorMessage = "";
-                        if (error.status == 504) errorMessage = "Server Error";
+                        if (error.status === 504) errorMessage = "Server Error";
                         return of(loadCategoriesFail({ error: errorMessage }));
                     })
                 )
