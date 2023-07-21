@@ -19,6 +19,7 @@ import { CategoriesModule } from "./views/categories/categories.module";
 import { PaymentMethodsModule } from "./views/payment-methods/payment-methods.module";
 import { VendorsModule } from "./views/vendors/vendors.module";
 import { TagsModule } from "./views/tags/tags.module";
+import { TransactionsModule } from "./views/transactions/transactions.module";
 
 //Store
 import { StoreModule } from "@ngrx/store";
@@ -59,6 +60,7 @@ import { TagsEffects } from "./state/tags/tags.effects";
         PaymentMethodsModule,
         VendorsModule,
         TagsModule,
+        TransactionsModule,
         AppRoutingModule,
         MatIconModule,
         MatButtonModule,
