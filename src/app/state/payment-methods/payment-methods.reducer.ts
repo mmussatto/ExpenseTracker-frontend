@@ -53,7 +53,7 @@ export const paymentMethodsReducer = createReducer(
 
     on(createPaymentMethodSuccess, (state, { paymentMethod }) => ({
         ...state,
-        categories: [...state.paymentMethods, { ...paymentMethod }],
+        paymentMethods: [...state.paymentMethods, { ...paymentMethod }],
         error: null,
         status: "LOADED" as const,
     })),
@@ -69,7 +69,7 @@ export const paymentMethodsReducer = createReducer(
 
     on(updatePaymentMethodSuccess, (state, { paymentMethod }) => ({
         ...state,
-        categories: state.paymentMethods.map((value) =>
+        paymentMethods: state.paymentMethods.map((value) =>
             value.id === paymentMethod.id
                 ? { ...value, name: paymentMethod.name, color: paymentMethod.type }
                 : value
@@ -89,7 +89,7 @@ export const paymentMethodsReducer = createReducer(
 
     on(deletePaymentMethodSuccess, (state, { id }) => ({
         ...state,
-        categories: state.paymentMethods.filter((p) => p.id != id),
+        paymentMethods: state.paymentMethods.filter((p) => p.id != id),
         error: null,
         status: "LOADED" as const,
     })),
