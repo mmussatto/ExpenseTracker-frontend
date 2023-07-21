@@ -20,6 +20,16 @@ import { PaymentMethodsModule } from "./views/payment-methods/payment-methods.mo
 import { VendorsModule } from "./views/vendors/vendors.module";
 import { TagsModule } from "./views/tags/tags.module";
 
+//Store
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { categoriesReducer } from "./state/categories/categories.reducer";
+import { CategoriesEffects } from "./state/categories/categories.effects";
+import { paymentMethodsReducer } from "./state/payment-methods/payment-methods.reducer";
+// import {PaymentMethodsEffects}
+import { vendorReducer } from "./state/vendors/vendors.reducer";
+import { tagsReducer } from "./state/tags/tags.reducer";
+
 //Angular Material
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -27,11 +37,10 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatDialogModule } from "@angular/material/dialog";
-import { StoreModule } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
-import { categoriesReducer } from "./state/categories/categories.reducer";
-import { CategoriesEffects } from "./state/categories/categories.effects";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { PaymentMethodsEffects } from "./state/payment-methods/payment-methods.effects";
+import { VendorsEffects } from "./state/vendors/vendors.effects";
+import { TagsEffects } from "./state/tags/tags.effects";
 
 @NgModule({
     declarations: [
@@ -58,8 +67,18 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         MatListModule,
         MatDialogModule,
         MatSnackBarModule,
-        StoreModule.forRoot({ categories: categoriesReducer }),
-        EffectsModule.forRoot([CategoriesEffects]),
+        StoreModule.forRoot({
+            categories: categoriesReducer,
+            paymentMethods: paymentMethodsReducer,
+            vendors: vendorReducer,
+            tags: tagsReducer,
+        }),
+        EffectsModule.forRoot([
+            CategoriesEffects,
+            PaymentMethodsEffects,
+            VendorsEffects,
+            TagsEffects,
+        ]),
     ],
     providers: [],
     bootstrap: [AppComponent],
