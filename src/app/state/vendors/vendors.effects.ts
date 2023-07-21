@@ -1,26 +1,26 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
-//Payment Methods
+//Vendors
 import { AppState } from "../app.state";
-import { PaymentMethodsState } from "./payment-methods.reducer";
-import { PaymentMethodService } from "src/app/views/payment-methods/services/payment-method.service";
+import { VendorsState } from "./vendors.reducer";
+import { VendorsService } from "src/app/views/vendors/services/vendors.service";
 import {
-    createPaymentMethod,
-    createPaymentMethodFail,
-    createPaymentMethodSuccess,
-    deletePaymentMethod,
-    deletePaymentMethodFail,
-    deletePaymentMethodSuccess,
-    getPaymentMethods,
-    loadPaymentMethods,
-    loadPaymentMethodsFail,
-    loadPaymentMethodsSuccess,
-    updatePaymentMethod,
-    updatePaymentMethodFail,
-    updatePaymentMethodSuccess,
-} from "./payment-methods.actions";
-import { selectPaymentMethodsState } from "./payment-methods.selectors";
+    createVendor,
+    createVendorFail,
+    createVendorSuccess,
+    deleteVendor,
+    deleteVendorFail,
+    deleteVendorSuccess,
+    getVendors,
+    loadVendors,
+    loadVendorsFail,
+    loadVendorsSuccess,
+    updateVendor,
+    updateVendorFail,
+    updateVendorSuccess,
+} from "./vendors.actions";
+import { selectVendorsState } from "./vendors.selectors";
 
 //NgRx
 import { Action, Store } from "@ngrx/store";
@@ -31,42 +31,40 @@ import { catchError, filter, from, map, of, switchMap, tap, withLatestFrom } fro
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable()
-export class PaymentMethodsEffects {
+export class VendorsEffects {
     constructor(
         private actions$: Actions,
         private store: Store<AppState>,
-        private paymentMethodsService: PaymentMethodService,
+        private vendorsService: VendorsService,
         private _snackBar: MatSnackBar,
         private router: Router
     ) {}
 
     /* -------- Loading ---------- */
-    getPaymentMethods$ = createEffect(() =>
+    getVendors$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(getPaymentMethods),
-            withLatestFrom(this.store.select(selectPaymentMethodsState)),
-            //Only call loadPaymentMethods if status is "NOT_LOADED" or "ERROR"
+            ofType(getVendors),
+            withLatestFrom(this.store.select(selectVendorsState)),
+            //Only call loadVendors if status is "NOT_LOADED" or "ERROR"
             filter(
-                ([action, paymentMethod]: [Action, PaymentMethodsState]) =>
-                    paymentMethod.status === "NOT_LOADED" || paymentMethod.status === "ERROR"
+                ([action, vendor]: [Action, VendorsState]) =>
+                    vendor.status === "NOT_LOADED" || vendor.status === "ERROR"
             ),
-            tap((_) => console.log("[Payment Methods Loaded from backend]")),
-            map(() => loadPaymentMethods())
+            tap((_) => console.log("[Vendors Loaded from backend]")),
+            map(() => loadVendors())
         )
     );
 
-    loadPaymentMethods$ = createEffect(() =>
+    loadVendors$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(loadPaymentMethods),
+            ofType(loadVendors),
             switchMap(() =>
-                from(this.paymentMethodsService.findAllPaymentMethods()).pipe(
-                    map((paymentMethods) =>
-                        loadPaymentMethodsSuccess({ paymentMethods: paymentMethods })
-                    ),
+                from(this.vendorsService.findAllVendors()).pipe(
+                    map((vendors) => loadVendorsSuccess({ vendors: vendors })),
                     catchError((error) => {
                         let errorMessage = "";
                         if (error.status === 504) errorMessage = "Server Error";
-                        return of(loadPaymentMethodsFail({ error: errorMessage }));
+                        return of(loadVendorsFail({ error: errorMessage }));
                     })
                 )
             )
@@ -74,28 +72,26 @@ export class PaymentMethodsEffects {
     );
 
     /* -------- Creating ---------- */
-    createPaymentMethod$ = createEffect(() =>
+    createVendor$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(createPaymentMethod),
-            switchMap(({ paymentMethod }) =>
-                from(this.paymentMethodsService.crateNewPaymentMethod(paymentMethod)).pipe(
+            ofType(createVendor),
+            switchMap(({ vendor }) =>
+                from(this.vendorsService.crateNewVendor(vendor)).pipe(
                     //Open snackbar with success message
                     tap(() => {
                         this._snackBar
-                            .open("Payment method created successfully", "X", {
+                            .open("Vendor created successfully", "X", {
                                 panelClass: ["app-notification-success"],
                                 duration: 5000,
                             })
-                            //Navigate back to payment methods list after snackbar is dismissed
+                            //Navigate back to vendors list after snackbar is dismissed
                             .afterDismissed()
                             .subscribe(() => {
                                 this.router.navigate(["payment-methods"]);
                             });
                     }),
-                    // Take the returned value and return a new success action containing the new Payment Method
-                    map((paymentMethod) =>
-                        createPaymentMethodSuccess({ paymentMethod: paymentMethod })
-                    ),
+                    // Take the returned value and return a new success action containing the new Vendor
+                    map((vendor) => createVendorSuccess({ vendor: vendor })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
                         const errorMessage = error.error.message ?? error.error.messages; //todo, remove after standardization of backend
@@ -104,7 +100,7 @@ export class PaymentMethodsEffects {
                             duration: 5000,
                         });
                         return of(
-                            createPaymentMethodFail({
+                            createVendorFail({
                                 error: errorMessage,
                             })
                         );
@@ -115,28 +111,26 @@ export class PaymentMethodsEffects {
     );
 
     /* -------- Updating ---------- */
-    updatePaymentMethod$ = createEffect(() =>
+    updateVendor$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(updatePaymentMethod),
-            switchMap(({ id, paymentMethod }) =>
-                from(this.paymentMethodsService.updatePaymentMethod(id, paymentMethod)).pipe(
+            ofType(updateVendor),
+            switchMap(({ id, vendor }) =>
+                from(this.vendorsService.updateVendor(id, vendor)).pipe(
                     //Open snackbar with success message
                     tap(() => {
                         this._snackBar
-                            .open("Payment Method updated successfully", "X", {
+                            .open("Vendor updated successfully", "X", {
                                 panelClass: ["app-notification-success"],
                                 duration: 5000,
                             })
-                            //Navigate back to payment methods list after snackbar is dismissed
+                            //Navigate back to vendors list after snackbar is dismissed
                             .afterDismissed()
                             .subscribe(() => {
                                 this.router.navigate(["payment-methods"]);
                             });
                     }),
-                    // Take the returned value and return a new success action containing the new Payment Method
-                    map((paymentMethod) =>
-                        updatePaymentMethodSuccess({ paymentMethod: paymentMethod })
-                    ),
+                    // Take the returned value and return a new success action containing the new Vendor
+                    map((vendor) => updateVendorSuccess({ vendor: vendor })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
                         const errorMessage = error.error.message ?? error.error.messages; //todo, remove after standardization of backend
@@ -145,7 +139,7 @@ export class PaymentMethodsEffects {
                             duration: 5000,
                         });
                         return of(
-                            updatePaymentMethodFail({
+                            updateVendorFail({
                                 error: errorMessage,
                             })
                         );
@@ -156,17 +150,17 @@ export class PaymentMethodsEffects {
     );
 
     /* -------- Deleting ---------- */
-    deletePaymentMethod$ = createEffect(() =>
+    deleteVendor$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(deletePaymentMethod),
+            ofType(deleteVendor),
             switchMap(({ id }) =>
-                from(this.paymentMethodsService.deletePaymentMethod(id)).pipe(
-                    // Return a new success action containing the deleted payment method's id
-                    map(() => deletePaymentMethodSuccess({ id })),
+                from(this.vendorsService.deleteVendor(id)).pipe(
+                    // Return a new success action containing the deleted vendor's id
+                    map(() => deleteVendorSuccess({ id })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
                         return of(
-                            deletePaymentMethodFail({
+                            deleteVendorFail({
                                 error: error.error.message ?? error.error.messages, //todo, remove after standardization of backend
                             })
                         );

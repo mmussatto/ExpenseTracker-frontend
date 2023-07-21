@@ -17,6 +17,7 @@ import { HomeComponent } from "./components/home/home.component";
 //View modules
 import { CategoriesModule } from "./views/categories/categories.module";
 import { PaymentMethodsModule } from "./views/payment-methods/payment-methods.module";
+import { VendorsModule } from "./views/vendors/vendors.module";
 
 //Angular Material
 import { MatIconModule } from "@angular/material/icon";
@@ -46,6 +47,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         BrowserAnimationsModule,
         CategoriesModule,
         PaymentMethodsModule,
+        VendorsModule,
         AppRoutingModule,
         MatIconModule,
         MatButtonModule,

@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { Action, Store } from "@ngrx/store";
-import { CategoriesService } from "src/app/views/categories/services/categories.service";
+import { Router } from "@angular/router";
+
+//Categories
 import { AppState } from "../app.state";
+import { CategoriesState } from "./categories.reducer";
+import { CategoriesService } from "src/app/views/categories/services/categories.service";
 import {
     createCategory,
     createCategoryFail,
@@ -18,11 +20,15 @@ import {
     updateCategoryFail,
     updateCategorySuccess,
 } from "./categories.actions";
-import { catchError, filter, from, map, of, switchMap, tap, withLatestFrom } from "rxjs";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router } from "@angular/router";
 import { selectCategoriesState } from "./categories.selectors";
-import { CategoriesState } from "./categories.reducer";
+
+//NgRx
+import { Action, Store } from "@ngrx/store";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { catchError, filter, from, map, of, switchMap, tap, withLatestFrom } from "rxjs";
+
+//Angular Material
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable()
 export class CategoriesEffects {
