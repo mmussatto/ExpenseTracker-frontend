@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { PaymentMethodService } from "./services/payment-methods.service";
+import { TransactionsService } from "./services/transactions.service";
 
 @NgModule({
     declarations: [],
     imports: [CommonModule],
-    providers: [PaymentMethodService],
+    providers: [TransactionsService],
 })
-export class PaymentMethodsModule {}
+export class TransactionsModule {}

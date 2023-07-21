@@ -14,6 +14,17 @@ import { Category } from "src/app/models/category.model";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "src/app/templates/dialogs/confirm-dialog/confirm-dialog.component";
 
+//Testing states -------------------------------------
+import { getPaymentMethods } from "src/app/state/payment-methods/payment-methods.actions";
+import { getVendors } from "src/app/state/vendors/vendors.actions";
+import { getTags } from "src/app/state/tags/tags.actions";
+import { selectPaymentMethodsState } from "src/app/state/payment-methods/payment-methods.selectors";
+import { selectVendorsState } from "src/app/state/vendors/vendors.selectors";
+import { selectTagsState } from "src/app/state/tags/tags.selectors";
+import { getTransactions } from "src/app/state/transactions/transactions.actions";
+import { selectTransactionsState } from "src/app/state/transactions/transactions.selectors";
+// -------------------------------------------------
+
 @Component({
     selector: "app-categories",
     templateUrl: "./categories.component.html",
@@ -62,6 +73,26 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
                 this.serverError = false;
             }
         });
+
+        // ----------------- Testing states ----------------------------------
+        this.store.dispatch(getPaymentMethods());
+        this.store.dispatch(getVendors());
+        this.store.dispatch(getTags());
+        this.store.dispatch(getTransactions());
+
+        this.store.select(selectPaymentMethodsState).subscribe((paymentMethods) => {
+            console.log(paymentMethods);
+        });
+        this.store.select(selectVendorsState).subscribe((vendorState) => {
+            console.log(vendorState);
+        });
+        this.store.select(selectTagsState).subscribe((tagState) => {
+            console.log(tagState);
+        });
+        this.store.select(selectTransactionsState).subscribe((transactionsState) => {
+            console.log(transactionsState);
+        });
+        // -----------------------------------------------------------------------
     }
 
     /** Announce the change in sort state for assistive technology. */

@@ -19,6 +19,21 @@ import { CategoriesModule } from "./views/categories/categories.module";
 import { PaymentMethodsModule } from "./views/payment-methods/payment-methods.module";
 import { VendorsModule } from "./views/vendors/vendors.module";
 import { TagsModule } from "./views/tags/tags.module";
+import { TransactionsModule } from "./views/transactions/transactions.module";
+
+//Store
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { categoriesReducer } from "./state/categories/categories.reducer";
+import { CategoriesEffects } from "./state/categories/categories.effects";
+import { paymentMethodsReducer } from "./state/payment-methods/payment-methods.reducer";
+import { PaymentMethodsEffects } from "./state/payment-methods/payment-methods.effects";
+import { vendorReducer } from "./state/vendors/vendors.reducer";
+import { VendorsEffects } from "./state/vendors/vendors.effects";
+import { TagsEffects } from "./state/tags/tags.effects";
+import { tagsReducer } from "./state/tags/tags.reducer";
+import { transactionsReducer } from "./state/transactions/transactions.reducer";
+import { TransactionsEffects } from "./state/transactions/transactions.effects";
 
 //Angular Material
 import { MatIconModule } from "@angular/material/icon";
@@ -27,10 +42,6 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatDialogModule } from "@angular/material/dialog";
-import { StoreModule } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
-import { categoriesReducer } from "./state/categories/categories.reducer";
-import { CategoriesEffects } from "./state/categories/categories.effects";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
@@ -50,6 +61,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         PaymentMethodsModule,
         VendorsModule,
         TagsModule,
+        TransactionsModule,
         AppRoutingModule,
         MatIconModule,
         MatButtonModule,
@@ -58,8 +70,20 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         MatListModule,
         MatDialogModule,
         MatSnackBarModule,
-        StoreModule.forRoot({ categories: categoriesReducer }),
-        EffectsModule.forRoot([CategoriesEffects]),
+        StoreModule.forRoot({
+            categories: categoriesReducer,
+            paymentMethods: paymentMethodsReducer,
+            vendors: vendorReducer,
+            tags: tagsReducer,
+            transactions: transactionsReducer,
+        }),
+        EffectsModule.forRoot([
+            CategoriesEffects,
+            PaymentMethodsEffects,
+            VendorsEffects,
+            TagsEffects,
+            TransactionsEffects,
+        ]),
     ],
     providers: [],
     bootstrap: [AppComponent],

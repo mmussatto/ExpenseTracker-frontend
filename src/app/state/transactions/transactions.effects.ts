@@ -1,26 +1,26 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
-//Payment Methods
+//Transactions
 import { AppState } from "../app.state";
-import { PaymentMethodsState } from "./payment-methods.reducer";
-import { PaymentMethodService } from "src/app/views/payment-methods/services/payment-methods.service";
+import { TransactionsState } from "./transactions.reducer";
+import { TransactionsService } from "src/app/views/transactions/services/transactions.service";
 import {
-    createPaymentMethod,
-    createPaymentMethodFail,
-    createPaymentMethodSuccess,
-    deletePaymentMethod,
-    deletePaymentMethodFail,
-    deletePaymentMethodSuccess,
-    getPaymentMethods,
-    loadPaymentMethods,
-    loadPaymentMethodsFail,
-    loadPaymentMethodsSuccess,
-    updatePaymentMethod,
-    updatePaymentMethodFail,
-    updatePaymentMethodSuccess,
-} from "./payment-methods.actions";
-import { selectPaymentMethodsState } from "./payment-methods.selectors";
+    createTransaction,
+    createTransactionFail,
+    createTransactionSuccess,
+    deleteTransaction,
+    deleteTransactionFail,
+    deleteTransactionSuccess,
+    getTransactions,
+    loadTransactions,
+    loadTransactionsFail,
+    loadTransactionsSuccess,
+    updateTransaction,
+    updateTransactionFail,
+    updateTransactionSuccess,
+} from "./transactions.actions";
+import { selectTransactionsState } from "./transactions.selectors";
 
 //NgRx
 import { Action, Store } from "@ngrx/store";
@@ -31,42 +31,40 @@ import { catchError, filter, from, map, of, switchMap, tap, withLatestFrom } fro
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable()
-export class PaymentMethodsEffects {
+export class TransactionsEffects {
     constructor(
         private actions$: Actions,
         private store: Store<AppState>,
-        private paymentMethodsService: PaymentMethodService,
+        private transactionsService: TransactionsService,
         private _snackBar: MatSnackBar,
         private router: Router
     ) {}
 
     /* -------- Loading ---------- */
-    getPaymentMethods$ = createEffect(() =>
+    getTransactions$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(getPaymentMethods),
-            withLatestFrom(this.store.select(selectPaymentMethodsState)),
-            //Only call loadPaymentMethods if status is "NOT_LOADED" or "ERROR"
+            ofType(getTransactions),
+            withLatestFrom(this.store.select(selectTransactionsState)),
+            //Only call loadTransactions if status is "NOT_LOADED" or "ERROR"
             filter(
-                ([action, paymentMethod]: [Action, PaymentMethodsState]) =>
-                    paymentMethod.status === "NOT_LOADED" || paymentMethod.status === "ERROR"
+                ([action, transaction]: [Action, TransactionsState]) =>
+                    transaction.status === "NOT_LOADED" || transaction.status === "ERROR"
             ),
-            tap((_) => console.log("[Payment Methods Loaded from backend]")),
-            map(() => loadPaymentMethods())
+            tap((_) => console.log("[Transactions Loaded from backend]")),
+            map(() => loadTransactions())
         )
     );
 
-    loadPaymentMethods$ = createEffect(() =>
+    loadTransactions$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(loadPaymentMethods),
+            ofType(loadTransactions),
             switchMap(() =>
-                from(this.paymentMethodsService.findAllPaymentMethods()).pipe(
-                    map((paymentMethods) =>
-                        loadPaymentMethodsSuccess({ paymentMethods: paymentMethods })
-                    ),
+                from(this.transactionsService.findAllTransactions()).pipe(
+                    map((transactions) => loadTransactionsSuccess({ transactions: transactions })),
                     catchError((error) => {
                         let errorMessage = "";
                         if (error.status === 504) errorMessage = "Server Error";
-                        return of(loadPaymentMethodsFail({ error: errorMessage }));
+                        return of(loadTransactionsFail({ error: errorMessage }));
                     })
                 )
             )
@@ -74,28 +72,26 @@ export class PaymentMethodsEffects {
     );
 
     /* -------- Creating ---------- */
-    createPaymentMethod$ = createEffect(() =>
+    createTransaction$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(createPaymentMethod),
-            switchMap(({ paymentMethod }) =>
-                from(this.paymentMethodsService.crateNewPaymentMethod(paymentMethod)).pipe(
+            ofType(createTransaction),
+            switchMap(({ transaction }) =>
+                from(this.transactionsService.crateNewTransaction(transaction)).pipe(
                     //Open snackbar with success message
                     tap(() => {
                         this._snackBar
-                            .open("Payment method created successfully", "X", {
+                            .open("Transaction created successfully", "X", {
                                 panelClass: ["app-notification-success"],
                                 duration: 5000,
                             })
-                            //Navigate back to payment methods list after snackbar is dismissed
+                            //Navigate back to transactions list after snackbar is dismissed
                             .afterDismissed()
                             .subscribe(() => {
-                                this.router.navigate(["payment-methods"]);
+                                this.router.navigate(["transactions"]);
                             });
                     }),
-                    // Take the returned value and return a new success action containing the new Payment Method
-                    map((paymentMethod) =>
-                        createPaymentMethodSuccess({ paymentMethod: paymentMethod })
-                    ),
+                    // Take the returned value and return a new success action containing the new Transaction
+                    map((transaction) => createTransactionSuccess({ transaction: transaction })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
                         const errorMessage = error.error.message ?? error.error.messages; //todo, remove after standardization of backend
@@ -104,7 +100,7 @@ export class PaymentMethodsEffects {
                             duration: 5000,
                         });
                         return of(
-                            createPaymentMethodFail({
+                            createTransactionFail({
                                 error: errorMessage,
                             })
                         );
@@ -115,28 +111,26 @@ export class PaymentMethodsEffects {
     );
 
     /* -------- Updating ---------- */
-    updatePaymentMethod$ = createEffect(() =>
+    updateTransaction$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(updatePaymentMethod),
-            switchMap(({ id, paymentMethod }) =>
-                from(this.paymentMethodsService.updatePaymentMethod(id, paymentMethod)).pipe(
+            ofType(updateTransaction),
+            switchMap(({ id, transaction }) =>
+                from(this.transactionsService.updateTransaction(id, transaction)).pipe(
                     //Open snackbar with success message
                     tap(() => {
                         this._snackBar
-                            .open("Payment Method updated successfully", "X", {
+                            .open("Transaction updated successfully", "X", {
                                 panelClass: ["app-notification-success"],
                                 duration: 5000,
                             })
-                            //Navigate back to payment methods list after snackbar is dismissed
+                            //Navigate back to transactions list after snackbar is dismissed
                             .afterDismissed()
                             .subscribe(() => {
-                                this.router.navigate(["payment-methods"]);
+                                this.router.navigate(["transaction"]);
                             });
                     }),
-                    // Take the returned value and return a new success action containing the new Payment Method
-                    map((paymentMethod) =>
-                        updatePaymentMethodSuccess({ paymentMethod: paymentMethod })
-                    ),
+                    // Take the returned value and return a new success action containing the new Transaction
+                    map((transaction) => updateTransactionSuccess({ transaction: transaction })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
                         const errorMessage = error.error.message ?? error.error.messages; //todo, remove after standardization of backend
@@ -145,7 +139,7 @@ export class PaymentMethodsEffects {
                             duration: 5000,
                         });
                         return of(
-                            updatePaymentMethodFail({
+                            updateTransactionFail({
                                 error: errorMessage,
                             })
                         );
@@ -156,17 +150,17 @@ export class PaymentMethodsEffects {
     );
 
     /* -------- Deleting ---------- */
-    deletePaymentMethod$ = createEffect(() =>
+    deleteTransaction$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(deletePaymentMethod),
+            ofType(deleteTransaction),
             switchMap(({ id }) =>
-                from(this.paymentMethodsService.deletePaymentMethod(id)).pipe(
-                    // Return a new success action containing the deleted payment method's id
-                    map(() => deletePaymentMethodSuccess({ id })),
+                from(this.transactionsService.deleteTransaction(id)).pipe(
+                    // Return a new success action containing the deleted transaction's id
+                    map(() => deleteTransactionSuccess({ id })),
                     // Or... if it errors return a new failure action containing the error message
                     catchError((error) => {
                         return of(
-                            deletePaymentMethodFail({
+                            deleteTransactionFail({
                                 error: error.error.message ?? error.error.messages, //todo, remove after standardization of backend
                             })
                         );
