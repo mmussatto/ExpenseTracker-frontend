@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { PaymentMethodService } from "./services/payment-method.service";
+import { PaymentMethodService } from "./services/payment-methods.service";
 
 @NgModule({
     declarations: [],

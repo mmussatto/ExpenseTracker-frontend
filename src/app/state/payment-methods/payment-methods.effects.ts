@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 //Payment Methods
 import { AppState } from "../app.state";
 import { PaymentMethodsState } from "./payment-methods.reducer";
-import { PaymentMethodService } from "src/app/views/payment-methods/services/payment-method.service";
+import { PaymentMethodService } from "src/app/views/payment-methods/services/payment-methods.service";
 import {
     createPaymentMethod,
     createPaymentMethodFail,
