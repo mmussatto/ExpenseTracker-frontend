@@ -28,7 +28,7 @@ export const initialState: TagsState = {
     status: "NOT_LOADED",
 };
 
-export const tagReducer = createReducer(
+export const tagsReducer = createReducer(
     initialState,
 
     /* -------- Loading ---------- */
