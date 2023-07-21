@@ -13,7 +13,10 @@ export class TransactionsService {
     constructor(private http: HttpClient) {}
 
     findAllTransactions(): Observable<Transaction[]> {
-        return this.http.get<Transaction[]>(this.baseUrl);
+        const url = `${this.baseUrl}?size=1000`;
+        return this.http
+            .get<TransactionPage>(url)
+            .pipe(map((transactionPage) => transactionPage.content));
     }
 
     crateNewTransaction(transaction: Transaction): Observable<Transaction> {
@@ -28,12 +31,5 @@ export class TransactionsService {
     deleteTransaction(id: number): Observable<any> {
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url);
-    }
-
-    getTransactionTransactions(id: number): Observable<Transaction[]> {
-        const url = `${this.baseUrl}/${id}/transactions?size=100`;
-        return this.http
-            .get<TransactionPage>(url)
-            .pipe(map((transactionPage) => transactionPage.content));
     }
 }
