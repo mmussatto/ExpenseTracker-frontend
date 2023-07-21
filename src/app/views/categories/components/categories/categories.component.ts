@@ -21,6 +21,8 @@ import { getTags } from "src/app/state/tags/tags.actions";
 import { selectPaymentMethodsState } from "src/app/state/payment-methods/payment-methods.selectors";
 import { selectVendorsState } from "src/app/state/vendors/vendors.selectors";
 import { selectTagsState } from "src/app/state/tags/tags.selectors";
+import { getTransactions } from "src/app/state/transactions/transactions.actions";
+import { selectTransactionsState } from "src/app/state/transactions/transactions.selectors";
 // -------------------------------------------------
 
 @Component({
@@ -76,6 +78,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
         this.store.dispatch(getPaymentMethods());
         this.store.dispatch(getVendors());
         this.store.dispatch(getTags());
+        this.store.dispatch(getTransactions());
 
         this.store.select(selectPaymentMethodsState).subscribe((paymentMethods) => {
             console.log(paymentMethods);
@@ -85,6 +88,9 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
         });
         this.store.select(selectTagsState).subscribe((tagState) => {
             console.log(tagState);
+        });
+        this.store.select(selectTransactionsState).subscribe((transactionsState) => {
+            console.log(transactionsState);
         });
         // -----------------------------------------------------------------------
     }
