@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { Action, Store } from "@ngrx/store";
-import { AppState } from "../app.state";
-import { PaymentMethodService } from "src/app/views/payment-methods/services/payment-method.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
+
+//Payment Methods
+import { AppState } from "../app.state";
+import { PaymentMethodsState } from "./payment-methods.reducer";
+import { PaymentMethodService } from "src/app/views/payment-methods/services/payment-method.service";
 import {
     createPaymentMethod,
     createPaymentMethodFail,
@@ -20,9 +20,15 @@ import {
     updatePaymentMethodFail,
     updatePaymentMethodSuccess,
 } from "./payment-methods.actions";
-import { catchError, filter, from, map, of, switchMap, tap, withLatestFrom } from "rxjs";
 import { selectPaymentMethodsState } from "./payment-methods.selectors";
-import { PaymentMethodsState } from "./payment-methods.reducer";
+
+//NgRx
+import { Action, Store } from "@ngrx/store";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { catchError, filter, from, map, of, switchMap, tap, withLatestFrom } from "rxjs";
+
+//Angular Material
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable()
 export class PaymentMethodsEffects {
